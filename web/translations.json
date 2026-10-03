@@ -1,0 +1,1992 @@
+{
+  "本地光盘制作": {
+    "zh": "本地光盘制作",
+    "ja": "ローカルディスク制作",
+    "en": "Local disc authoring"
+  },
+  "本地光盘制作工作台": {
+    "zh": "本地光盘制作工作台",
+    "ja": "ディスク制作ワークスペース",
+    "en": "Disc authoring workspace"
+  },
+  "● 本机处理 · DVD / Blu-ray": {
+    "zh": "● 本机处理 · DVD / Blu-ray",
+    "ja": "● この Mac で処理 · DVD / Blu-ray",
+    "en": "● Processed on this Mac · DVD / Blu-ray"
+  },
+  "把影片，做成光盘。": {
+    "zh": "把影片，做成光盘。",
+    "ja": "映像を、ディスクに。",
+    "en": "Turn films into discs."
+  },
+  "编排节目与菜单，生成可刻录的影片 ISO。": {
+    "zh": "编排节目与菜单，生成可刻录的影片 ISO。",
+    "ja": "作品とメニューを編集し、書き込み用 ISO を作成します。",
+    "en": "Arrange videos and menus, then create a burnable ISO."
+  },
+  "制作设置": {
+    "zh": "制作设置",
+    "ja": "制作設定",
+    "en": "Authoring settings"
+  },
+  "光盘标题": {
+    "zh": "光盘标题",
+    "ja": "ディスクタイトル",
+    "en": "Disc title"
+  },
+  "光盘格式": {
+    "zh": "光盘格式",
+    "ja": "ディスク形式",
+    "en": "Disc format"
+  },
+  "DVD-Video · 标清": {
+    "zh": "DVD-Video · 标清",
+    "ja": "DVD-Video · SD",
+    "en": "DVD-Video · SD"
+  },
+  "Blu-ray Video · 高清": {
+    "zh": "Blu-ray Video · 高清",
+    "ja": "Blu-ray Video · HD",
+    "en": "Blu-ray Video · HD"
+  },
+  "光盘容量": {
+    "zh": "光盘容量",
+    "ja": "ディスク容量",
+    "en": "Disc capacity"
+  },
+  "DVD 制式": {
+    "zh": "DVD 制式",
+    "ja": "DVD 映像方式",
+    "en": "DVD video standard"
+  },
+  "NTSC · 日本 / 北美 · 16:9": {
+    "zh": "NTSC · 日本 / 北美 · 16:9",
+    "ja": "NTSC · 日本 / 北米 · 16:9",
+    "en": "NTSC · Japan / North America · 16:9"
+  },
+  "Blu-ray 画面格式": {
+    "zh": "Blu-ray 画面格式",
+    "ja": "Blu-ray 映像形式",
+    "en": "Blu-ray video format"
+  },
+  "1080i · 59.94 场/秒（运动画面）": {
+    "zh": "1080i · 59.94 场/秒（运动画面）",
+    "ja": "1080i · 59.94 フィールド/秒（動きのある映像）",
+    "en": "1080i · 59.94 fields/s (motion)"
+  },
+  "每页节目数量（1–12）": {
+    "zh": "每页节目数量（1–12）",
+    "ja": "1 ページの作品数（1–12）",
+    "en": "Videos per page (1–12)"
+  },
+  "菜单布局": {
+    "zh": "菜单布局",
+    "ja": "メニュー配置",
+    "en": "Menu layout"
+  },
+  "按节目数量自动排列": {
+    "zh": "按节目数量自动排列",
+    "ja": "作品数に合わせて自動配置",
+    "en": "Automatic layout by video count"
+  },
+  "自定义按钮区域": {
+    "zh": "自定义按钮区域",
+    "ja": "ボタン領域を指定",
+    "en": "Custom button regions"
+  },
+  "节目名称字体（本机字体）": {
+    "zh": "节目名称字体（本机字体）",
+    "ja": "作品名のフォント（この Mac）",
+    "en": "Title font (installed on this Mac)"
+  },
+  "搜索字体名称": {
+    "zh": "搜索字体名称",
+    "ja": "フォント名を検索",
+    "en": "Search font names"
+  },
+  "节目名称字体": {
+    "zh": "节目名称字体",
+    "ja": "作品名のフォント",
+    "en": "Video title font"
+  },
+  "字号": {
+    "zh": "字号",
+    "ja": "文字サイズ",
+    "en": "Font size"
+  },
+  "刷新本机字体": {
+    "zh": "刷新本机字体",
+    "ja": "フォントを再読み込み",
+    "en": "Refresh installed fonts"
+  },
+  "菜单背景": {
+    "zh": "菜单背景",
+    "ja": "メニュー背景",
+    "en": "Menu background"
+  },
+  "选择背景图片": {
+    "zh": "选择背景图片",
+    "ja": "背景画像を選択",
+    "en": "Choose background image"
+  },
+  "使用默认背景": {
+    "zh": "使用默认背景",
+    "ja": "標準背景を使用",
+    "en": "Use default background"
+  },
+  "深蓝色目录菜单": {
+    "zh": "深蓝色目录菜单",
+    "ja": "濃紺のメニュー背景",
+    "en": "Dark blue menu background"
+  },
+  "节目数量与每页数量分别设置。左右按行循环，上下按列循环；播放结束返回所在菜单。": {
+    "zh": "节目数量与每页数量分别设置。左右按行循环，上下按列循环；播放结束返回所在菜单。",
+    "ja": "作品数と 1 ページの作品数は個別に設定します。左右は行順、上下は列順で循環し、再生後は元のメニューに戻ります。",
+    "en": "Set total videos and videos per page separately. Left/right cycle by row; up/down cycle by column. Playback returns to its menu."
+  },
+  "按钮区域与遥控方向": {
+    "zh": "按钮区域与遥控方向",
+    "ja": "ボタン領域とリモコン操作",
+    "en": "Button regions and remote navigation"
+  },
+  "坐标以 1920 × 1080 菜单为基准。方向目标为当前页面的按钮编号。": {
+    "zh": "坐标以 1920 × 1080 菜单为基准。方向目标为当前页面的按钮编号。",
+    "ja": "座標は 1920 × 1080 基準です。移動先は現在のページのボタン番号で指定します。",
+    "en": "Coordinates use a 1920 × 1080 canvas. Direction targets are button numbers on the current page."
+  },
+  "恢复直觉循环": {
+    "zh": "恢复直觉循环",
+    "ja": "循環操作を初期設定に戻す",
+    "en": "Reset cyclic navigation"
+  },
+  "保存项目": {
+    "zh": "保存项目",
+    "ja": "プロジェクトを保存",
+    "en": "Save project"
+  },
+  "打开项目": {
+    "zh": "打开项目",
+    "ja": "プロジェクトを開く",
+    "en": "Open project"
+  },
+  "生成 ISO": {
+    "zh": "生成 ISO",
+    "ja": "ISO を作成",
+    "en": "Create ISO"
+  },
+  "根据时长和容量计算码率，保留源视频。请选择空间足够的输出磁盘。": {
+    "zh": "根据时长和容量计算码率，保留源视频。请选择空间足够的输出磁盘。",
+    "ja": "再生時間と容量からビットレートを計算します。元の動画は保持されます。十分な空き容量のある保存先を選んでください。",
+    "en": "Bitrate is calculated from duration and capacity. Source videos are preserved. Choose an output disk with enough free space."
+  },
+  "ISO 输出目录": {
+    "zh": "ISO 输出目录",
+    "ja": "ISO 保存先",
+    "en": "ISO output folder"
+  },
+  "选择输出文件夹": {
+    "zh": "选择输出文件夹",
+    "ja": "保存先フォルダを選択",
+    "en": "Choose output folder"
+  },
+  "开始制作 ISO": {
+    "zh": "开始制作 ISO",
+    "ja": "ISO 作成を開始",
+    "en": "Start creating ISO"
+  },
+  "取消制作": {
+    "zh": "取消制作",
+    "ja": "制作を中止",
+    "en": "Cancel authoring"
+  },
+  "查看日志": {
+    "zh": "查看日志",
+    "ja": "ログを表示",
+    "en": "View log"
+  },
+  "显示文件": {
+    "zh": "显示文件",
+    "ja": "Finder で表示",
+    "en": "Show in Finder"
+  },
+  "02 / 节目列表": {
+    "zh": "02 / 节目列表",
+    "ja": "02 / 作品一覧",
+    "en": "02 / Videos"
+  },
+  "0 个视频": {
+    "zh": "0 个视频",
+    "ja": "動画 0 本",
+    "en": "0 videos"
+  },
+  "粘贴路径": {
+    "zh": "粘贴路径",
+    "ja": "パスを貼り付け",
+    "en": "Paste paths"
+  },
+  "＋ 添加视频": {
+    "zh": "＋ 添加视频",
+    "ja": "＋ 動画を追加",
+    "en": "＋ Add videos"
+  },
+  "选择本机视频开始制作": {
+    "zh": "选择本机视频开始制作",
+    "ja": "この Mac の動画を選択してください",
+    "en": "Choose local videos to begin"
+  },
+  "03 / 菜单预览": {
+    "zh": "03 / 菜单预览",
+    "ja": "03 / メニュープレビュー",
+    "en": "03 / Menu preview"
+  },
+  "更新预览": {
+    "zh": "更新预览",
+    "ja": "プレビューを更新",
+    "en": "Refresh preview"
+  },
+  "菜单遥控预览": {
+    "zh": "菜单遥控预览",
+    "ja": "リモコン操作プレビュー",
+    "en": "Remote navigation preview"
+  },
+  "添加视频后可预览菜单": {
+    "zh": "添加视频后可预览菜单",
+    "ja": "動画を追加するとメニューを確認できます",
+    "en": "Add videos to preview the menu"
+  },
+  "生成的光盘使用相同布局": {
+    "zh": "生成的光盘使用相同布局",
+    "ja": "ディスクにも同じ配置が使用されます",
+    "en": "The disc uses the same layout"
+  },
+  "左": {
+    "zh": "左",
+    "ja": "左",
+    "en": "Left"
+  },
+  "右": {
+    "zh": "右",
+    "ja": "右",
+    "en": "Right"
+  },
+  "上": {
+    "zh": "上",
+    "ja": "上",
+    "en": "Up"
+  },
+  "下": {
+    "zh": "下",
+    "ja": "下",
+    "en": "Down"
+  },
+  "确认": {
+    "zh": "确认",
+    "ja": "決定",
+    "en": "OK"
+  },
+  "主菜单": {
+    "zh": "主菜单",
+    "ja": "トップメニュー",
+    "en": "Top menu"
+  },
+  "点击菜单或使用方向键 / Enter 预演节目导航。此处预演不代替实体播放机验盘。": {
+    "zh": "点击菜单或使用方向键 / Enter 预演节目导航。此处预演不代替实体播放机验盘。",
+    "ja": "クリックまたは方向キー / Enter で操作を確認できます。実機でのディスク検証は別途必要です。",
+    "en": "Click or use arrow keys / Enter to try navigation. This preview does not replace testing on a physical player."
+  },
+  "生成的是 DVD-Video / BDMV 光盘结构与 ISO 镜像。首次交付前请用实际播放机验证遥控器、声音、菜单和画面。": {
+    "zh": "生成的是 DVD-Video / BDMV 光盘结构与 ISO 镜像。首次交付前请用实际播放机验证遥控器、声音、菜单和画面。",
+    "ja": "DVD-Video / BDMV 構造と ISO イメージを作成します。初回納品前に実機でリモコン、音声、メニュー、映像を確認してください。",
+    "en": "Creates DVD-Video / BDMV structures and ISO images. Before first delivery, check remote control, audio, menus and video on an actual player."
+  },
+  "选择视频": {
+    "zh": "选择视频",
+    "ja": "動画を選択",
+    "en": "Choose videos"
+  },
+  "关闭": {
+    "zh": "关闭",
+    "ja": "閉じる",
+    "en": "Close"
+  },
+  "目录路径": {
+    "zh": "目录路径",
+    "ja": "フォルダのパス",
+    "en": "Folder path"
+  },
+  "前往": {
+    "zh": "前往",
+    "ja": "移動",
+    "en": "Go"
+  },
+  "上一级": {
+    "zh": "上一级",
+    "ja": "上の階層",
+    "en": "Parent folder"
+  },
+  "添加所选文件": {
+    "zh": "添加所选文件",
+    "ja": "選択したファイルを追加",
+    "en": "Add selected files"
+  },
+  "粘贴视频完整路径": {
+    "zh": "粘贴视频完整路径",
+    "ja": "動画のフルパスを貼り付け",
+    "en": "Paste full video paths"
+  },
+  "每行一个文件路径。可从 Finder 复制路径名。": {
+    "zh": "每行一个文件路径。可从 Finder 复制路径名。",
+    "ja": "1 行につき 1 ファイル。Finder からパス名をコピーできます。",
+    "en": "One file path per line. You can copy pathnames from Finder."
+  },
+  "取消": {
+    "zh": "取消",
+    "ja": "キャンセル",
+    "en": "Cancel"
+  },
+  "添加": {
+    "zh": "添加",
+    "ja": "追加",
+    "en": "Add"
+  },
+  "制作日志": {
+    "zh": "制作日志",
+    "ja": "制作ログ",
+    "en": "Authoring log"
+  },
+  "已保存项目": {
+    "zh": "已保存项目",
+    "ja": "保存済みプロジェクト",
+    "en": "Saved projects"
+  },
+  "上移": {
+    "zh": "上移",
+    "ja": "上へ移動：",
+    "en": "Move up: "
+  },
+  "下移": {
+    "zh": "下移",
+    "ja": "下へ移動：",
+    "en": "Move down: "
+  },
+  "移除": {
+    "zh": "移除",
+    "ja": "削除：",
+    "en": "Remove: "
+  },
+  "选择 ISO 输出目录": {
+    "zh": "选择 ISO 输出目录",
+    "ja": "ISO 保存先を選択",
+    "en": "Choose ISO output folder"
+  },
+  "使用当前文件夹": {
+    "zh": "使用当前文件夹",
+    "ja": "このフォルダを使用",
+    "en": "Use this folder"
+  },
+  "使用所选背景": {
+    "zh": "使用所选背景",
+    "ja": "選択した背景を使用",
+    "en": "Use selected background"
+  },
+  "将播放：": {
+    "zh": "将播放：",
+    "ja": "再生する作品：",
+    "en": "Will play: "
+  },
+  "点击“主菜单”返回预览": {
+    "zh": "点击“主菜单”返回预览",
+    "ja": "「トップメニュー」でプレビューに戻ります",
+    "en": "Select “Top menu” to return to the preview"
+  },
+  "此按钮对应：": {
+    "zh": "此按钮对应：",
+    "ja": "このボタンの動画：",
+    "en": "Linked video: "
+  },
+  "尚未绑定视频": {
+    "zh": "尚未绑定视频",
+    "ja": "動画が未設定です",
+    "en": "No video linked yet"
+  },
+  "项目已保存：": {
+    "zh": "项目已保存：",
+    "ja": "保存しました：",
+    "en": "Project saved: "
+  },
+  "尚未保存项目": {
+    "zh": "尚未保存项目",
+    "ja": "保存済みプロジェクトはありません",
+    "en": "No saved projects yet"
+  },
+  "请先添加视频": {
+    "zh": "请先添加视频",
+    "ja": "先に動画を追加してください",
+    "en": "Add videos first"
+  },
+  "宽": {
+    "zh": "宽",
+    "ja": "幅",
+    "en": "Width"
+  },
+  "高": {
+    "zh": "高",
+    "ja": "高さ",
+    "en": "Height"
+  },
+  "{n} 个视频": {
+    "zh": "{n} 个视频",
+    "ja": "動画 {n} 本",
+    "en": "{n} videos"
+  },
+  "节目 {n} 名称": {
+    "zh": "节目 {n} 名称",
+    "ja": "作品 {n} の名前",
+    "en": "Video {n} title"
+  },
+  "合计 {m} 分 {s} 秒 · {p} 页菜单": {
+    "zh": "合计 {m} 分 {s} 秒 · {p} 页菜单",
+    "ja": "合計 {m} 分 {s} 秒 · メニュー {p} ページ",
+    "en": "Total {m} min {s} sec · {p} menu pages"
+  },
+  "已选 {n} 个文件": {
+    "zh": "已选 {n} 个文件",
+    "ja": "{n} ファイルを選択",
+    "en": "{n} files selected"
+  },
+  "光盘菜单第 {n} 页": {
+    "zh": "光盘菜单第 {n} 页",
+    "ja": "ディスクメニュー {n} ページ",
+    "en": "Disc menu page {n}"
+  },
+  "第 {n} / {p} 页 · 已选择：{name}": {
+    "zh": "第 {n} / {p} 页 · 已选择：{name}",
+    "ja": "{n} / {p} ページ · 選択中：{name}",
+    "en": "Page {n} / {p} · Selected: {name}"
+  },
+  "按钮 {n} · {name}": {
+    "zh": "按钮 {n} · {name}",
+    "ja": "ボタン {n} · {name}",
+    "en": "Button {n} · {name}"
+  },
+  "按钮{n}{name}": {
+    "zh": "按钮{n}{name}",
+    "ja": "ボタン {n} {name}",
+    "en": "Button {n} {name}"
+  },
+  "按钮{n}方向{name}": {
+    "zh": "按钮{n}方向{name}",
+    "ja": "ボタン {n} 移動方向 {name}",
+    "en": "Button {n} direction {name}"
+  },
+  "{n} 个节目 / 页": {
+    "zh": "{n} 个节目 / 页",
+    "ja": "1 ページ {n} 作品",
+    "en": "{n} videos / page"
+  },
+  "上一页": {
+    "zh": "上一页",
+    "ja": "前のページ",
+    "en": "Previous page"
+  },
+  "下一页": {
+    "zh": "下一页",
+    "ja": "次のページ",
+    "en": "Next page"
+  },
+  "节目 {n}": {
+    "zh": "节目 {n}",
+    "ja": "作品 {n}",
+    "en": "Video {n}"
+  },
+  "方向键选择 · 确认播放 · TOP MENU 返回目录": {
+    "zh": "方向键选择 · 确认播放 · TOP MENU 返回目录",
+    "ja": "方向キーで選択 · 決定で再生 · TOP MENU でメニューへ",
+    "en": "Arrows to select · OK to play · TOP MENU to return"
+  },
+  "等待制作": {
+    "zh": "等待制作",
+    "ja": "制作待機中",
+    "en": "Waiting to start"
+  },
+  "输出尚未创建": {
+    "zh": "输出尚未创建",
+    "ja": "出力はまだ作成されていません",
+    "en": "Output has not been created yet"
+  },
+  "目录不存在": {
+    "zh": "目录不存在",
+    "ja": "フォルダが見つかりません",
+    "en": "Folder does not exist"
+  },
+  "最多添加 30 个文件": {
+    "zh": "最多添加 30 个文件",
+    "ja": "最大 30 ファイルまで追加できます",
+    "en": "Add up to 30 files"
+  },
+  "页码无效": {
+    "zh": "页码无效",
+    "ja": "ページ番号が無効です",
+    "en": "Invalid page number"
+  },
+  "已有制作任务运行中": {
+    "zh": "已有制作任务运行中",
+    "ja": "制作タスクが実行中です",
+    "en": "An authoring job is already running"
+  },
+  "请选择 DVD 或 Blu-ray": {
+    "zh": "请选择 DVD 或 Blu-ray",
+    "ja": "DVD または Blu-ray を選択してください",
+    "en": "Choose DVD or Blu-ray"
+  },
+  "视频制式无效": {
+    "zh": "视频制式无效",
+    "ja": "映像方式が無効です",
+    "en": "Invalid video standard"
+  },
+  "光盘容量与格式不匹配": {
+    "zh": "光盘容量与格式不匹配",
+    "ja": "ディスク容量と形式が一致しません",
+    "en": "Disc capacity does not match the format"
+  },
+  "请添加 1–30 个视频": {
+    "zh": "请添加 1–30 个视频",
+    "ja": "動画を 1～30 本追加してください",
+    "en": "Add 1–30 videos"
+  },
+  "每页节目数应为 1–12": {
+    "zh": "每页节目数应为 1–12",
+    "ja": "1 ページの作品数は 1～12 です",
+    "en": "Videos per page must be 1–12"
+  },
+  "菜单布局无效": {
+    "zh": "菜单布局无效",
+    "ja": "メニュー配置が無効です",
+    "en": "Invalid menu layout"
+  },
+  "自定义按钮区域数应等于每页节目数": {
+    "zh": "自定义按钮区域数应等于每页节目数",
+    "ja": "ボタン領域数を 1 ページの作品数と一致させてください",
+    "en": "Custom button region count must match videos per page"
+  },
+  "按钮区域必须是四个整数": {
+    "zh": "按钮区域必须是四个整数",
+    "ja": "ボタン領域は 4 つの整数で指定してください",
+    "en": "Button regions must contain four integers"
+  },
+  "按钮区域超出画面或过小": {
+    "zh": "按钮区域超出画面或过小",
+    "ja": "ボタン領域が画面外、または小さすぎます",
+    "en": "Button region is outside the canvas or too small"
+  },
+  "字体大小应为 16–100": {
+    "zh": "字体大小应为 16–100",
+    "ja": "文字サイズは 16～100 です",
+    "en": "Font size must be 16–100"
+  },
+  "视频路径不能含换行或双引号": {
+    "zh": "视频路径不能含换行或双引号",
+    "ja": "動画パスに改行や二重引用符は使用できません",
+    "en": "Video paths cannot contain newlines or double quotes"
+  },
+  "自定义遥控目标超出当前菜单按钮范围": {
+    "zh": "自定义遥控目标超出当前菜单按钮范围",
+    "ja": "リモコンの移動先がボタン範囲外です",
+    "en": "Remote navigation target is outside the button range"
+  },
+  "编译 DVD 导航结构": {
+    "zh": "编译 DVD 导航结构",
+    "ja": "DVD ナビゲーションを構築中",
+    "en": "Compiling DVD navigation"
+  },
+  "生成 DVD-Video ISO": {
+    "zh": "生成 DVD-Video ISO",
+    "ja": "DVD-Video ISO を作成中",
+    "en": "Creating DVD-Video ISO"
+  },
+  "生成 UDF 2.50 Blu-ray ISO": {
+    "zh": "生成 UDF 2.50 Blu-ray ISO",
+    "ja": "UDF 2.50 Blu-ray ISO を作成中",
+    "en": "Creating UDF 2.50 Blu-ray ISO"
+  },
+  "检查视频与容量": {
+    "zh": "检查视频与容量",
+    "ja": "動画と容量を確認中",
+    "en": "Checking videos and capacity"
+  },
+  "视频总时长过长，请选择更大容量或减少视频": {
+    "zh": "视频总时长过长，请选择更大容量或减少视频",
+    "ja": "総再生時間が長すぎます。容量を増やすか動画を減らしてください",
+    "en": "Total duration is too long. Increase capacity or remove videos"
+  },
+  "ISO 超过所选光盘容量，请降低时长或选择更大光盘": {
+    "zh": "ISO 超过所选光盘容量，请降低时长或选择更大光盘",
+    "ja": "ISO がディスク容量を超えています。動画を短くするか容量を増やしてください",
+    "en": "ISO exceeds disc capacity. Reduce duration or choose a larger disc"
+  },
+  "ISO 已生成": {
+    "zh": "ISO 已生成",
+    "ja": "ISO を作成しました",
+    "en": "ISO created"
+  },
+  "已取消，已保留日志和中间文件": {
+    "zh": "已取消，已保留日志和中间文件",
+    "ja": "中止しました。ログと中間ファイルは保持されています",
+    "en": "Cancelled. Logs and intermediate files were preserved"
+  },
+  "制作失败": {
+    "zh": "制作失败",
+    "ja": "制作に失敗しました",
+    "en": "Authoring failed"
+  },
+  "无法读取视频：{detail}": {
+    "zh": "无法读取视频：{detail}",
+    "ja": "動画を読み込めません：{detail}",
+    "en": "Cannot read video: {detail}"
+  },
+  "文件没有视频轨：{detail}": {
+    "zh": "文件没有视频轨：{detail}",
+    "ja": "映像トラックがありません：{detail}",
+    "en": "File has no video track: {detail}"
+  },
+  "无法确定视频时长：{detail}": {
+    "zh": "无法确定视频时长：{detail}",
+    "ja": "動画の長さを取得できません：{detail}",
+    "en": "Cannot determine video duration: {detail}"
+  },
+  "找不到视频：{detail}": {
+    "zh": "找不到视频：{detail}",
+    "ja": "動画が見つかりません：{detail}",
+    "en": "Video not found: {detail}"
+  },
+  "制作 DVD 菜单 {detail}": {
+    "zh": "制作 DVD 菜单 {detail}",
+    "ja": "DVD メニューを作成中 {detail}",
+    "en": "Creating DVD menu {detail}"
+  },
+  "编译 Blu-ray 菜单 {detail}": {
+    "zh": "编译 Blu-ray 菜单 {detail}",
+    "ja": "Blu-ray メニューを構築中 {detail}",
+    "en": "Compiling Blu-ray menu {detail}"
+  },
+  "编码节目 {detail}": {
+    "zh": "编码节目 {detail}",
+    "ja": "作品をエンコード中 {detail}",
+    "en": "Encoding video {detail}"
+  },
+  "封装 Blu-ray 流 {detail}": {
+    "zh": "封装 Blu-ray 流 {detail}",
+    "ja": "Blu-ray ストリームを多重化中 {detail}",
+    "en": "Muxing Blu-ray stream {detail}"
+  },
+  "输出盘空间不足，需要约 {detail} GB 空间": {
+    "zh": "输出盘空间不足，需要约 {detail} GB 空间",
+    "ja": "保存先の空き容量が不足しています。約 {detail} GB 必要です",
+    "en": "Insufficient output disk space. Approximately {detail} GB required"
+  },
+  "{tool} 运行失败（{code}），请查看 build.log": {
+    "zh": "{tool} 运行失败（{code}），请查看 build.log",
+    "ja": "{tool} が失敗しました（{code}）。build.log を確認してください",
+    "en": "{tool} failed ({code}). See build.log"
+  },
+  "新建项目": {
+    "zh": "新建项目",
+    "ja": "新規プロジェクト",
+    "en": "New project"
+  },
+  "制作流程": {
+    "zh": "制作流程",
+    "ja": "制作フロー",
+    "en": "Authoring workflow"
+  },
+  "素材与轨道": {
+    "zh": "素材与轨道",
+    "ja": "素材・トラック",
+    "en": "Source & tracks"
+  },
+  "菜单编辑": {
+    "zh": "菜单编辑",
+    "ja": "メニュー編集",
+    "en": "Menu editor"
+  },
+  "遥控模拟": {
+    "zh": "遥控模拟",
+    "ja": "シミュレーション",
+    "en": "Simulation"
+  },
+  "输出": {
+    "zh": "输出",
+    "ja": "出力",
+    "en": "Output"
+  },
+  "添加视频并编排节目。每个节目对应一个菜单按钮。": {
+    "zh": "添加视频并编排节目。每个节目对应一个菜单按钮。",
+    "ja": "動画を追加して作品を並べます。各作品にメニューボタンが割り当てられます。",
+    "en": "Add and arrange videos. Each video gets a menu button."
+  },
+  "光盘设置": {
+    "zh": "光盘设置",
+    "ja": "ディスク設定",
+    "en": "Disc settings"
+  },
+  "原视频保留在原位置，项目保存引用路径。": {
+    "zh": "原视频保留在原位置，项目保存引用路径。",
+    "ja": "元の動画は移動しません。プロジェクトには参照先を保存します。",
+    "en": "Source files remain in place. Projects save their file references."
+  },
+  "节目列表": {
+    "zh": "节目列表",
+    "ja": "作品一覧",
+    "en": "Videos"
+  },
+  "为当前项目选择背景、字体、布局和按钮反馈。": {
+    "zh": "为当前项目选择背景、字体、布局和按钮反馈。",
+    "ja": "このプロジェクトの背景・フォント・配置・ボタン効果を設定します。",
+    "en": "Choose this project's background, fonts, layout and button feedback."
+  },
+  "菜单设置": {
+    "zh": "菜单设置",
+    "ja": "メニュー設定",
+    "en": "Menu settings"
+  },
+  "导入项目背景": {
+    "zh": "导入项目背景",
+    "ja": "背景画像を読み込む",
+    "en": "Import project background"
+  },
+  "按钮反馈": {
+    "zh": "按钮反馈",
+    "ja": "ボタンのハイライト",
+    "en": "Button feedback"
+  },
+  "高亮方式": {
+    "zh": "高亮方式",
+    "ja": "ハイライト形式",
+    "en": "Highlight style"
+  },
+  "半透明填色": {
+    "zh": "半透明填色",
+    "ja": "半透明の塗りつぶし",
+    "en": "Translucent fill"
+  },
+  "轮廓高亮": {
+    "zh": "轮廓高亮",
+    "ja": "枠線",
+    "en": "Outline"
+  },
+  "选中颜色": {
+    "zh": "选中颜色",
+    "ja": "選択時の色",
+    "en": "Selected color"
+  },
+  "按下颜色": {
+    "zh": "按下颜色",
+    "ja": "決定時の色",
+    "en": "Activated color"
+  },
+  "高亮不透明度": {
+    "zh": "高亮不透明度",
+    "ja": "不透明度",
+    "en": "Highlight opacity"
+  },
+  "方向键选择节目，确认后显示按下反馈并试播对应视频。": {
+    "zh": "方向键选择节目，确认后显示按下反馈并试播对应视频。",
+    "ja": "方向キーで選び、決定すると反応を表示して対応する動画を試し再生します。",
+    "en": "Select with arrows; confirm to see activation feedback and preview the linked video."
+  },
+  "检查项目设置并生成可刻录的 ISO。": {
+    "zh": "检查项目设置并生成可刻录的 ISO。",
+    "ja": "設定を確認し、書き込み用 ISO を作成します。",
+    "en": "Check the project settings and create a burnable ISO."
+  },
+  "制作摘要": {
+    "zh": "制作摘要",
+    "ja": "制作内容",
+    "en": "Project summary"
+  },
+  "检查项目": {
+    "zh": "检查项目",
+    "ja": "プロジェクトを検証",
+    "en": "Check project"
+  },
+  "菜单页面": {
+    "zh": "菜单页面",
+    "ja": "メニューページ",
+    "en": "Menu page"
+  },
+  "按钮状态": {
+    "zh": "按钮状态",
+    "ja": "表示状態",
+    "en": "Button state"
+  },
+  "普通": {
+    "zh": "普通",
+    "ja": "通常",
+    "en": "Normal"
+  },
+  "选中": {
+    "zh": "选中",
+    "ja": "選択",
+    "en": "Selected"
+  },
+  "按下": {
+    "zh": "按下",
+    "ja": "決定",
+    "en": "Activated"
+  },
+  "全屏": {
+    "zh": "全屏",
+    "ja": "全画面",
+    "en": "Full screen"
+  },
+  "菜单预览": {
+    "zh": "菜单预览",
+    "ja": "メニュープレビュー",
+    "en": "Menu preview"
+  },
+  "点击按钮选择，拖动调整位置；在遥控模拟中确认播放。": {
+    "zh": "点击按钮选择，拖动调整位置；在遥控模拟中确认播放。",
+    "ja": "クリックで選択し、ドラッグで移動。再生の確認はシミュレーションで行います。",
+    "en": "Click to select, drag to position. Use Simulation to test playback."
+  },
+  "返回菜单": {
+    "zh": "返回菜单",
+    "ja": "メニューに戻る",
+    "en": "Return to menu"
+  },
+  "浏览器试播源视频；光盘编码后的兼容性请用实际播放机验证。": {
+    "zh": "浏览器试播源视频；光盘编码后的兼容性请用实际播放机验证。",
+    "ja": "ブラウザでは元の動画を試し再生します。ディスクの互換性は実機で確認してください。",
+    "en": "The browser previews source videos. Verify authored-disc compatibility on an actual player."
+  },
+  "上一步": {
+    "zh": "上一步",
+    "ja": "戻る",
+    "en": "Back"
+  },
+  "下一步": {
+    "zh": "下一步",
+    "ja": "次へ",
+    "en": "Next"
+  },
+  "当前项目尚未保存的更改会被替换。可以先保存再新建。": {
+    "zh": "当前项目尚未保存的更改会被替换。可以先保存再新建。",
+    "ja": "未保存の変更は置き換えられます。保存してから新規作成することもできます。",
+    "en": "Unsaved changes will be replaced. You can save before starting a new project."
+  },
+  "保存并新建": {
+    "zh": "保存并新建",
+    "ja": "保存して新規作成",
+    "en": "Save and create new"
+  },
+  "直接新建": {
+    "zh": "直接新建",
+    "ja": "保存せず新規作成",
+    "en": "Create without saving"
+  },
+  "第 {n} 页": {
+    "zh": "第 {n} 页",
+    "ja": "{n} ページ",
+    "en": "Page {n}"
+  },
+  "浏览器无法播放此源格式；仍可进行光盘编码。": {
+    "zh": "浏览器无法播放此源格式；仍可进行光盘编码。",
+    "ja": "このブラウザでは元の形式を再生できません。ディスクのエンコードは可能です。",
+    "en": "The browser cannot play this source format. Disc encoding is still available."
+  },
+  "正在试播：{name}": {
+    "zh": "正在试播：{name}",
+    "ja": "試し再生中：{name}",
+    "en": "Previewing: {name}"
+  },
+  "请点击视频播放键": {
+    "zh": "请点击视频播放键",
+    "ja": "動画の再生ボタンを押してください",
+    "en": "Click the video play button"
+  },
+  "检查通过：{n} 个视频，预计需要 {gb} GB 可用空间。": {
+    "zh": "检查通过：{n} 个视频，预计需要 {gb} GB 可用空间。",
+    "ja": "検証完了：動画 {n} 本、必要な空き容量は約 {gb} GB です。",
+    "en": "Checks passed: {n} videos; approximately {gb} GB free space required."
+  },
+  "播放规则": {
+    "zh": "播放规则",
+    "ja": "再生ルール",
+    "en": "Playback rules"
+  },
+  "初始选中按钮": {
+    "zh": "初始选中按钮",
+    "ja": "最初に選択するボタン",
+    "en": "Initially selected button"
+  },
+  "播放结束后": {
+    "zh": "播放结束后",
+    "ja": "再生終了後",
+    "en": "After playback"
+  },
+  "播放下一节目，最后返回菜单": {
+    "zh": "播放下一节目，最后返回菜单",
+    "ja": "次の作品を再生し、最後にメニューへ",
+    "en": "Play next, then return to menu"
+  },
+  "连续循环全部节目": {
+    "zh": "连续循环全部节目",
+    "ja": "全作品を繰り返し再生",
+    "en": "Loop all videos"
+  },
+  "返回菜单时选中刚播放的节目": {
+    "zh": "返回菜单时选中刚播放的节目",
+    "ja": "メニューへ戻ったときに直前の作品を選択",
+    "en": "Select the last played video on return"
+  },
+  "正在检查项目…": {
+    "zh": "正在检查项目…",
+    "ja": "プロジェクトを検証中…",
+    "en": "Checking project…"
+  },
+  "双击按钮编辑名称": {
+    "zh": "双击按钮编辑名称",
+    "ja": "ダブルクリックで名前を編集",
+    "en": "Double-click to edit title"
+  },
+  "编辑节目名称": {
+    "zh": "编辑节目名称",
+    "ja": "作品名を編集",
+    "en": "Edit video title"
+  },
+  "应用": {
+    "zh": "应用",
+    "ja": "適用",
+    "en": "Apply"
+  },
+  "项目配置必须是对象": {
+    "zh": "项目配置必须是对象",
+    "ja": "プロジェクト設定が無効です",
+    "en": "Invalid project configuration"
+  },
+  "无法读取项目素材或字体：{detail}": {
+    "zh": "无法读取项目素材或字体：{detail}",
+    "ja": "素材またはフォントを読み込めません：{detail}",
+    "en": "Cannot read project media or font: {detail}"
+  },
+  "初选按钮应在每页节目数量范围内": {
+    "zh": "初选按钮应在每页节目数量范围内",
+    "ja": "最初のボタンは 1 ページの作品数以内で指定してください",
+    "en": "Initial button must be within the videos-per-page range"
+  },
+  "第 {page} 页的遥控目标超出按钮范围：{button}": {
+    "zh": "第 {page} 页的遥控目标超出按钮范围：{button}",
+    "ja": "{page} ページの移動先が範囲外です：{button}",
+    "en": "Remote target is outside the button range on page {page}: {button}"
+  },
+  "第 {page} 页从初选按钮 {first} 无法到达按钮：{numbers}": {
+    "zh": "第 {page} 页从初选按钮 {first} 无法到达按钮：{numbers}",
+    "ja": "{page} ページの初期ボタン {first} から到達できないボタン：{numbers}",
+    "en": "On page {page}, buttons unreachable from initial button {first}: {numbers}"
+  },
+  "第 {page} 页按钮 {a} 与按钮 {b} 的区域重叠，请调整位置": {
+    "zh": "第 {page} 页按钮 {a} 与按钮 {b} 的区域重叠，请调整位置",
+    "ja": "{page} ページのボタン {a} と {b} が重なっています。位置を調整してください",
+    "en": "Buttons {a} and {b} overlap on page {page}. Adjust their positions"
+  },
+  "第 {page} 页按钮 {a} 与按钮 {b} 在 DVD 分辨率下重叠，请增大间距": {
+    "zh": "第 {page} 页按钮 {a} 与按钮 {b} 在 DVD 分辨率下重叠，请增大间距",
+    "ja": "{page} ページのボタン {a} と {b} が DVD 解像度で重なります。間隔を広げてください",
+    "en": "Buttons {a} and {b} overlap at DVD resolution on page {page}. Increase spacing"
+  },
+  "输出路径的上级不是文件夹：{path}": {
+    "zh": "输出路径的上级不是文件夹：{path}",
+    "ja": "保存先の上位パスがフォルダではありません：{path}",
+    "en": "The output parent is not a folder: {path}"
+  },
+  "无法检查输出目录：{path}": {
+    "zh": "无法检查输出目录：{path}",
+    "ja": "保存先を確認できません：{path}",
+    "en": "Cannot check output folder: {path}"
+  },
+  "无法确定视频总时长": {
+    "zh": "无法确定视频总时长",
+    "ja": "総再生時間を取得できません",
+    "en": "Cannot determine total video duration"
+  },
+  "button_feedback must be an object": {
+    "zh": "按钮反馈设置无效",
+    "ja": "ハイライト設定が無効です",
+    "en": "Invalid highlight settings"
+  },
+  "button_feedback.style must be fill or frame": {
+    "zh": "高亮方式应为填色或轮廓",
+    "ja": "ハイライト形式は塗りつぶしまたは枠線です",
+    "en": "Highlight style must be fill or outline"
+  },
+  "button_feedback.{key} must be a hex RGB colour": {
+    "zh": "高亮颜色无效：{key}",
+    "ja": "ハイライトの色 {key} が無効です",
+    "en": "Invalid highlight color: {key}"
+  },
+  "button_feedback.opacity must be between 0.1 and 1": {
+    "zh": "高亮不透明度应为10%–100%",
+    "ja": "不透明度は 10～100% で指定してください",
+    "en": "Highlight opacity must be 10–100%"
+  },
+  "Selected and activated colours must be different": {
+    "zh": "选中和按下应使用不同颜色",
+    "ja": "選択時と決定時の色を変えてください",
+    "en": "Selected and activated colors must be different"
+  },
+  "first_button must be between 1 and per_page": {
+    "zh": "初选按钮应在每页节目数量范围内",
+    "ja": "最初のボタンは 1 ページの作品数以内で指定してください",
+    "en": "Initial button must be within the videos-per-page range"
+  },
+  "after_play must be menu, next or loop": {
+    "zh": "播放结束后的规则无效",
+    "ja": "再生終了後の動作が無効です",
+    "en": "Invalid after-playback behavior"
+  },
+  "remember_selection must be a boolean": {
+    "zh": "焦点记忆设置无效",
+    "ja": "選択位置の記憶設定が無効です",
+    "en": "Invalid selection memory setting"
+  },
+  "Legacy four-button layout requires per_page=4": {
+    "zh": "旧四按钮项目应设置为每页4个节目",
+    "ja": "旧 4 ボタン配置には 1 ページ 4 作品を指定してください",
+    "en": "The legacy four-button layout requires four videos per page"
+  },
+  "制作模式": {
+    "zh": "制作模式",
+    "ja": "制作モード",
+    "en": "Workspace mode"
+  },
+  "快速模式": {
+    "zh": "快速模式",
+    "ja": "クイックモード",
+    "en": "Quick mode"
+  },
+  "专业模式": {
+    "zh": "专业模式",
+    "ja": "プロモード",
+    "en": "Professional mode"
+  },
+  "在一个页面中添加视频、设置菜单并生成 ISO。": {
+    "zh": "在一个页面中添加视频、设置菜单并生成 ISO。",
+    "ja": "1 つの画面で動画の追加・メニュー設定・ISO 作成を行います。",
+    "en": "Add videos, set up menus and create an ISO on one page."
+  },
+  "button_feedback.{key} must be a boolean": {
+    "ja": "ボタン効果の {key} はオンまたはオフで指定してください",
+    "zh": "按钮反馈的 {key} 必须是开关值",
+    "en": "Button feedback {key} must be enabled or disabled"
+  },
+  "text_style must be an object": {
+    "ja": "文字装飾の設定が正しくありません",
+    "zh": "文字样式设置无效",
+    "en": "Text style settings must be an object"
+  },
+  "text_style.{key} must be a hex RGB colour": {
+    "ja": "文字装飾の {key} は RGB 色で指定してください",
+    "zh": "文字样式的 {key} 必须是 RGB 颜色",
+    "en": "Text style {key} must be an RGB color"
+  },
+  "text_style.outline_enabled must be a boolean": {
+    "ja": "文字の縁取りをオンまたはオフで指定してください",
+    "zh": "文字描边必须是开关值",
+    "en": "Text outline must be enabled or disabled"
+  },
+  "Text outline width must be between 1 and 12": {
+    "ja": "縁取りの太さは 1〜12 で指定してください",
+    "zh": "文字描边粗细应为 1–12",
+    "en": "Text outline width must be between 1 and 12"
+  },
+  "无菜单：请在原生应用中模拟顺序播放": {
+    "zh": "无菜单：请在原生应用中模拟顺序播放",
+    "ja": "メニューなし：ネイティブアプリで連続再生を確認してください",
+    "en": "No menu: use the native app to simulate sequential playback"
+  },
+  "menu_enabled must be a boolean": {
+    "zh": "菜单开关必须为开启或关闭",
+    "ja": "メニュー設定はオンまたはオフで指定してください",
+    "en": "Menu enabled must be true or false"
+  },
+  "no_menu_end_action must be loop or stop": {
+    "zh": "无菜单播放结束动作应为循环或停止",
+    "ja": "メニューなしの終了動作は繰り返しまたは停止にしてください",
+    "en": "Menu-free playback must end by looping or stopping"
+  },
+  "HDR / BT.2020 素材请先转换为 SDR Rec.709：{path}": {
+    "zh": "HDR / BT.2020 素材请先转换为 SDR Rec.709：{path}",
+    "ja": "HDR / BT.2020 の素材は、先に SDR Rec.709 に変換してください：{path}",
+    "en": "Convert HDR / BT.2020 footage to SDR Rec.709 first: {path}"
+  },
+  "分析画质（第一遍）：{title}": {
+    "zh": "分析画质（第一遍）：{title}",
+    "ja": "画質を分析中（1 / 2）：{title}",
+    "en": "Quality analysis (1 / 2): {title}"
+  },
+  "编码输出（第二遍）：{title}": {
+    "zh": "编码输出（第二遍）：{title}",
+    "ja": "エンコード中（2 / 2）：{title}",
+    "en": "Encoding output (2 / 2): {title}"
+  },
+  "找不到队列任务": {
+    "zh": "找不到队列任务",
+    "ja": "キューのタスクが見つかりません",
+    "en": "Queue task not found"
+  },
+  "请添加 1–1000 个项目到队列": {
+    "zh": "请添加 1–1000 个项目到队列",
+    "ja": "キューには1〜1000件のプロジェクトを追加できます",
+    "en": "Add 1–1000 projects to the queue"
+  },
+  "队列移动方向必须为 up 或 down": {
+    "zh": "队列移动方向必须为 up 或 down",
+    "ja": "移動方向はupまたはdownで指定してください",
+    "en": "Queue move direction must be up or down"
+  },
+  "制作服务正在退出": {
+    "zh": "制作服务正在退出",
+    "ja": "制作サービスを終了しています",
+    "en": "The authoring service is shutting down"
+  },
+  "队列最多保留 1000 个任务，请移除已完成记录": {
+    "zh": "队列最多保留 1000 个任务，请移除已完成记录",
+    "ja": "キューは最大1000件です。完了した記録を削除してください",
+    "en": "The queue holds up to 1000 tasks. Remove completed records to make room."
+  },
+  "只能暂停正在制作的任务": {
+    "zh": "只能暂停正在制作的任务",
+    "ja": "制作中のタスクのみ一時停止できます",
+    "en": "Only the active task can be paused"
+  },
+  "只能继续当前暂停的任务": {
+    "zh": "只能继续当前暂停的任务",
+    "ja": "現在一時停止中のタスクのみ再開できます",
+    "en": "Only the paused active task can be resumed"
+  },
+  "只能调整等待中的任务顺序": {
+    "zh": "只能调整等待中的任务顺序",
+    "ja": "順番を変更できるのは待機中のタスクのみです",
+    "en": "Only pending tasks can be reordered"
+  },
+  "只能重试失败、取消或中断的任务": {
+    "zh": "只能重试失败、取消或中断的任务",
+    "ja": "失敗・キャンセル・中断したタスクのみ再試行できます",
+    "en": "Only failed, cancelled, or interrupted tasks can be retried"
+  },
+  "请先取消正在制作的任务": {
+    "zh": "请先取消正在制作的任务",
+    "ja": "先に制作中のタスクをキャンセルしてください",
+    "en": "Cancel the active task first"
+  },
+  "已取消": {
+    "zh": "已取消",
+    "ja": "キャンセル済み",
+    "en": "Cancelled"
+  },
+  "无法读取持久化制作队列：{path}": {
+    "zh": "无法读取持久化制作队列：{path}",
+    "ja": "保存した制作キューを読み込めません：{path}",
+    "en": "Cannot read the saved authoring queue: {path}"
+  },
+  "制作进程未报告完成": {
+    "zh": "制作进程未报告完成",
+    "ja": "制作プロセスから完了通知がありません",
+    "en": "The authoring process did not report completion"
+  },
+  "上次制作已中断，请重试": {
+    "zh": "上次制作已中断，请重试",
+    "ja": "前回の制作は中断されました。再試行してください",
+    "en": "The previous run was interrupted. Retry this task."
+  },
+  "服务退出前未完成此任务": {
+    "zh": "服务退出前未完成此任务",
+    "ja": "サービス終了前にこのタスクは完了しませんでした",
+    "en": "This task did not finish before the service exited"
+  },
+  "我的影片": {
+    "zh": "我的影片",
+    "ja": "マイムービー",
+    "en": "My Movie"
+  },
+  "队列保存或调度失败，已停止后续制作：{error}": {
+    "zh": "队列保存或调度失败，已停止后续制作：{error}",
+    "ja": "キューの保存または実行に失敗したため、以降の制作を停止しました：{error}",
+    "en": "Queue saving or scheduling failed; further jobs have been stopped: {error}"
+  },
+  "请选择本机 ISO 文件": {
+    "zh": "请选择本机 ISO 文件",
+    "ja": "この Mac の ISO ファイルを選択してください",
+    "en": "Select a local ISO file"
+  },
+  "ISO 文件大小或扩展名无效": {
+    "zh": "ISO 文件大小或扩展名无效",
+    "ja": "ISO ファイルのサイズまたは拡張子が無効です",
+    "en": "Invalid ISO file size or extension"
+  },
+  "镜像不是完整的 DVD-Video 或 Blu-ray Video": {
+    "zh": "镜像不是完整的 DVD-Video 或 Blu-ray Video",
+    "ja": "完全な DVD-Video または Blu-ray Video のイメージではありません",
+    "en": "The image is not a complete DVD-Video or Blu-ray Video image"
+  },
+  "ISO 文件在检查期间发生变化": {
+    "zh": "ISO 文件在检查期间发生变化",
+    "ja": "確認中に ISO ファイルが変更されました",
+    "en": "The ISO file changed during inspection"
+  },
+  "未找到所选光驱": {
+    "zh": "未找到所选光驱",
+    "ja": "選択したドライブが見つかりません",
+    "en": "The selected drive was not found"
+  },
+  "请插入空白光盘": {
+    "zh": "请插入空白光盘",
+    "ja": "空のディスクを挿入してください",
+    "en": "Insert a blank disc"
+  },
+  "光驱正在忙碌": {
+    "zh": "光驱正在忙碌",
+    "ja": "ドライブは使用中です",
+    "en": "The drive is busy"
+  },
+  "盘片不是空白盘，不会自动擦除": {
+    "zh": "盘片不是空白盘，不会自动擦除",
+    "ja": "空のディスクではありません。自動消去は行いません",
+    "en": "The disc is not blank. It will not be erased automatically"
+  },
+  "光驱不能写入此盘片": {
+    "zh": "光驱不能写入此盘片",
+    "ja": "このドライブではこのディスクに書き込めません",
+    "en": "This drive cannot write to this disc"
+  },
+  "ISO 类型与盘片类型不匹配": {
+    "zh": "ISO 类型与盘片类型不匹配",
+    "ja": "ISO とディスクの種類が一致しません",
+    "en": "The ISO and disc types do not match"
+  },
+  "光驱不支持此类型烧录": {
+    "zh": "光驱不支持此类型烧录",
+    "ja": "このドライブはこの種類の書き込みに対応していません",
+    "en": "The drive does not support this disc format"
+  },
+  "无法确认盘片可用容量": {
+    "zh": "无法确认盘片可用容量",
+    "ja": "ディスクの空き容量を確認できません",
+    "en": "The available disc capacity could not be determined"
+  },
+  "盘片容量不足": {
+    "zh": "盘片容量不足",
+    "ja": "ディスクの容量が不足しています",
+    "en": "The disc has insufficient capacity"
+  },
+  "烧录速度无效": {
+    "zh": "烧录速度无效",
+    "ja": "書き込み速度が無効です",
+    "en": "Invalid burn speed"
+  },
+  "程序正在退出": {
+    "zh": "程序正在退出",
+    "ja": "アプリを終了しています",
+    "en": "The application is shutting down"
+  },
+  "已有烧录任务运行中": {
+    "zh": "已有烧录任务运行中",
+    "ja": "すでに書き込み処理が実行中です",
+    "en": "A burn is already in progress"
+  },
+  "准备烧录": {
+    "zh": "准备烧录",
+    "ja": "書き込みを準備中",
+    "en": "Preparing to burn"
+  },
+  "正在烧录": {
+    "zh": "正在烧录",
+    "ja": "書き込み中",
+    "en": "Writing disc"
+  },
+  "正在校验": {
+    "zh": "正在校验",
+    "ja": "書き込み内容を検証中",
+    "en": "Verifying written data"
+  },
+  "正在封盘": {
+    "zh": "正在封盘",
+    "ja": "ディスクを仕上げ中",
+    "en": "Finalizing disc"
+  },
+  "烧录并校验完成": {
+    "zh": "烧录并校验完成",
+    "ja": "書き込みと検証が完了しました",
+    "en": "Burn and verification completed"
+  },
+  "烧录已取消，盘片可能无法使用": {
+    "zh": "烧录已取消，盘片可能无法使用",
+    "ja": "書き込みをキャンセルしました。ディスクは使用できない可能性があります",
+    "en": "Burn cancelled. The disc may be unusable"
+  },
+  "烧录失败，请查看日志": {
+    "zh": "烧录失败，请查看日志",
+    "ja": "書き込みに失敗しました。ログを確認してください",
+    "en": "Burn failed. Check the log"
+  },
+  "未收到烧录校验结果，请检查盘片": {
+    "zh": "未收到烧录校验结果，请检查盘片",
+    "ja": "書き込み検証の結果を確認できません。ディスクを確認してください",
+    "en": "Burn verification was not confirmed. Check the disc"
+  },
+  "正在取消烧录，请等待光驱结束": {
+    "zh": "正在取消烧录，请等待光驱结束",
+    "ja": "書き込みをキャンセル中です。ドライブの停止をお待ちください",
+    "en": "Cancelling burn. Wait for the drive to finish"
+  },
+  "烧录由另一进程保护中，请等待完成": {
+    "zh": "烧录由另一进程保护中，请等待完成",
+    "ja": "別のプロセスで書き込みを保護しています。完了をお待ちください",
+    "en": "Another process is protecting the active burn. Wait for completion"
+  },
+  "烧录进程已中断，盘片状态未知": {
+    "zh": "烧录进程已中断，盘片状态未知",
+    "ja": "書き込み処理が中断されました。ディスクの状態は不明です",
+    "en": "The burn process was interrupted. Disc state is unknown"
+  },
+  "烧录状态保存失败：{error}": {
+    "zh": "烧录状态保存失败：{error}",
+    "ja": "書き込み状態を保存できません：{error}",
+    "en": "Could not save burn status: {error}"
+  },
+  "预处理画质（无损缓存）：{name}": {
+    "zh": "预处理画质（无损缓存）：{name}",
+    "ja": "画質処理（可逆圧縮キャッシュ）：{name}",
+    "en": "Preparing quality (lossless cache): {name}"
+  },
+  "无法读取无损缓存时间戳": {
+    "zh": "无法读取无损缓存时间戳",
+    "ja": "可逆圧縮キャッシュのタイムスタンプを読み取れません",
+    "en": "Cannot read lossless cache timestamps"
+  },
+  "无损缓存时间戳无效": {
+    "zh": "无损缓存时间戳无效",
+    "ja": "可逆圧縮キャッシュのタイムスタンプが無効です",
+    "en": "Invalid lossless cache timestamp"
+  },
+  "无法清理临时无损缓存：{error}": {
+    "zh": "无法清理临时无损缓存：{error}",
+    "ja": "一時的な可逆圧縮キャッシュを削除できません：{error}",
+    "en": "Cannot remove temporary lossless cache: {error}"
+  },
+  "检查重新封装的蓝光播放": {
+    "zh": "检查重新封装的蓝光播放",
+    "ja": "再パッケージした Blu-ray の再生を検査",
+    "en": "Checking re-exported Blu-ray playback"
+  },
+  "完整检查蓝光音视频：{title}": {
+    "zh": "完整检查蓝光音视频：{title}",
+    "ja": "Blu-ray 映像・音声の全編検査：{title}",
+    "en": "Full Blu-ray audio/video verification: {title}"
+  },
+  "无损重新封装蓝光：{message}": {
+    "zh": "无损重新封装蓝光：{message}",
+    "ja": "Blu-ray の無劣化再パッケージ：{message}",
+    "en": "Lossless Blu-ray re-export: {message}"
+  },
+  "检查原 Blu-ray ISO": {
+    "zh": "检查原 Blu-ray ISO",
+    "ja": "元の Blu-ray ISO を確認",
+    "en": "Checking source Blu-ray ISO"
+  },
+  "验证已有重导出结果": {
+    "zh": "验证已有重导出结果",
+    "ja": "既存の再出力結果を検証",
+    "en": "Verifying existing re-export"
+  },
+  "已有重导出结果验证完成": {
+    "zh": "已有重导出结果验证完成",
+    "ja": "既存の再出力結果の検証が完了",
+    "en": "Existing re-export verified"
+  },
+  "校验原 ISO": {
+    "zh": "校验原 ISO",
+    "ja": "元の ISO を検証",
+    "en": "Verifying source ISO"
+  },
+  "提取 Blu-ray 文件": {
+    "zh": "提取 Blu-ray 文件",
+    "ja": "Blu-ray ファイルを展開",
+    "en": "Extracting Blu-ray files"
+  },
+  "修正 PCR 连续计数器：{name}": {
+    "zh": "修正 PCR 连续计数器：{name}",
+    "ja": "PCR 連続カウンターを修正：{name}",
+    "en": "Correcting PCR continuity counter: {name}"
+  },
+  "重新封装 Blu-ray ISO": {
+    "zh": "重新封装 Blu-ray ISO",
+    "ja": "Blu-ray ISO を再構成",
+    "en": "Repackaging Blu-ray ISO"
+  },
+  "验证新 ISO 结构与全部文件": {
+    "zh": "验证新 ISO 结构与全部文件",
+    "ja": "新しい ISO の構造と全ファイルを検証",
+    "en": "Verifying new ISO structure and all files"
+  },
+  "验证新 ISO 文件内容": {
+    "zh": "验证新 ISO 文件内容",
+    "ja": "新しい ISO のファイル内容を検証",
+    "en": "Verifying new ISO file contents"
+  },
+  "校验新 ISO": {
+    "zh": "校验新 ISO",
+    "ja": "新しい ISO を検証",
+    "en": "Verifying new ISO"
+  },
+  "Blu-ray 无损重导出验证完成": {
+    "zh": "Blu-ray 无损重导出验证完成",
+    "ja": "Blu-ray 無劣化再出力の検証が完了",
+    "en": "Lossless Blu-ray re-export verified"
+  },
+  "无损重新封装只适用于 Blu-ray ISO": {
+    "zh": "无损重新封装只适用于 Blu-ray ISO",
+    "ja": "無劣化の再構成は Blu-ray ISO のみ対応しています",
+    "en": "Lossless repackaging requires a Blu-ray ISO"
+  },
+  "找不到待重新封装的 Blu-ray ISO": {
+    "zh": "找不到待重新封装的 Blu-ray ISO",
+    "ja": "再構成する Blu-ray ISO が見つかりません",
+    "en": "Source Blu-ray ISO not found"
+  },
+  "无损重新封装的项目配置与原 ISO 不一致：{key}": {
+    "zh": "无损重新封装的项目配置与原 ISO 不一致：{key}",
+    "ja": "再構成の設定が元の ISO と一致しません：{key}",
+    "en": "Re-export settings differ from the source ISO: {key}"
+  },
+  "无损重新封装的节目列表与原 ISO 不一致": {
+    "zh": "无损重新封装的节目列表与原 ISO 不一致",
+    "ja": "再構成の番組一覧が元の ISO と一致しません",
+    "en": "Re-export program list differs from the source ISO"
+  },
+  "原文件不是 Blu-ray Video ISO": {
+    "zh": "原文件不是 Blu-ray Video ISO",
+    "ja": "元のファイルは Blu-ray Video ISO ではありません",
+    "en": "Source is not a Blu-ray Video ISO"
+  },
+  "重新封装的蓝光流数量不匹配": {
+    "zh": "重新封装的蓝光流数量不匹配",
+    "ja": "再構成した Blu-ray のストリーム数が一致しません",
+    "en": "Re-exported Blu-ray stream count does not match"
+  },
+  "重新封装的蓝光流编号不匹配": {
+    "zh": "重新封装的蓝光流编号不匹配",
+    "ja": "再構成した Blu-ray のストリーム番号が一致しません",
+    "en": "Re-exported Blu-ray stream numbering does not match"
+  },
+  "重新封装的蓝光音视频参数验证失败：{name}": {
+    "zh": "重新封装的蓝光音视频参数验证失败：{name}",
+    "ja": "再構成した Blu-ray の映像・音声の検証に失敗：{name}",
+    "en": "Re-exported Blu-ray audio/video validation failed: {name}"
+  },
+  "按项目名保存 ISO": {
+    "zh": "按项目名保存 ISO",
+    "ja": "プロジェクト名で ISO を保存中",
+    "en": "Saving ISO with the project name"
+  },
+  "ISO 保存方式无效": {
+    "zh": "ISO 保存方式无效",
+    "ja": "ISO の保存方法が無効です",
+    "en": "Invalid ISO export mode"
+  },
+  "ISO 格式后缀设置无效": {
+    "zh": "ISO 格式后缀设置无效",
+    "ja": "ISO ファイル名の形式設定が無効です",
+    "en": "Invalid ISO format suffix setting"
+  },
+  "输出文件夹路径无效": {
+    "zh": "输出文件夹路径无效",
+    "ja": "出力フォルダのパスが無効です",
+    "en": "Invalid output folder path"
+  },
+  "制作记录文件夹不可用": {
+    "zh": "制作记录文件夹不可用",
+    "ja": "制作記録フォルダを使用できません",
+    "en": "The task records folder is unavailable"
+  },
+  "同名 ISO 文件过多，请更改项目名称": {
+    "zh": "同名 ISO 文件过多，请更改项目名称",
+    "ja": "同名の ISO が多すぎます。プロジェクト名を変更してください",
+    "en": "Too many ISOs have this name. Change the project name"
+  },
+  "完成的 ISO 不是普通文件": {
+    "zh": "完成的 ISO 不是普通文件",
+    "ja": "完成した ISO を通常のファイルとして読み込めません",
+    "en": "The completed ISO is not a regular file"
+  },
+  "ISO 不属于当前制作任务": {
+    "zh": "ISO 不属于当前制作任务",
+    "ja": "ISO が現在の制作タスクに属していません",
+    "en": "The ISO does not belong to this task"
+  },
+  "成品文件夹不能位于当前制作文件夹内": {
+    "zh": "成品文件夹不能位于当前制作文件夹内",
+    "ja": "完成品の保存先を現在の制作フォルダ内に指定できません",
+    "en": "The finished ISO folder cannot be inside the current task folder"
+  },
+  "复制期间 ISO 发生变化，已停止保存": {
+    "zh": "复制期间 ISO 发生变化，已停止保存",
+    "ja": "コピー中に ISO が変更されたため、保存を停止しました",
+    "en": "The ISO changed while being copied. Saving was stopped"
+  },
+  "上次视频直刻已中断，请检查光盘后重试": {
+    "zh": "上次视频直刻已中断，请检查光盘后重试",
+    "ja": "前回の動画書き込みは中断されました。ディスクを確認して再試行してください",
+    "en": "The previous direct burn was interrupted. Check the disc before retrying"
+  },
+  "临时制作路径无效": {
+    "zh": "临时制作路径无效",
+    "ja": "一時作成先のパスが無効です",
+    "en": "The temporary authoring path is invalid"
+  },
+  "临时镜像已发生变化，请重新制作": {
+    "zh": "临时镜像已发生变化，请重新制作",
+    "ja": "一時イメージが変更されています。もう一度作成してください",
+    "en": "The temporary image has changed. Create it again"
+  },
+  "临时镜像路径无效": {
+    "zh": "临时镜像路径无效",
+    "ja": "一時イメージのパスが無効です",
+    "en": "The temporary image path is invalid"
+  },
+  "准备视频直刻": {
+    "zh": "准备视频直刻",
+    "ja": "動画の直接書き込みを準備中",
+    "en": "Preparing direct video burn"
+  },
+  "准备重试烧录": {
+    "zh": "准备重试烧录",
+    "ja": "書き込みの再試行を準備中",
+    "en": "Preparing to retry the burn"
+  },
+  "制作期间光盘信息已变化，请重新检查后重试烧录": {
+    "zh": "制作期间光盘信息已变化，请重新检查后重试烧录",
+    "ja": "作成中にディスクの情報が変わりました。再確認して書き込みを再試行してください",
+    "en": "Disc information changed during authoring. Check the disc again before retrying"
+  },
+  "已取消，临时文件和日志已保留": {
+    "zh": "已取消，临时文件和日志已保留",
+    "ja": "キャンセルしました。一時ファイルとログは保持されています",
+    "en": "Cancelled. Temporary files and logs have been kept"
+  },
+  "已有视频直刻任务运行中": {
+    "zh": "已有视频直刻任务运行中",
+    "ja": "動画の直接書き込みがすでに実行中です",
+    "en": "A direct video burn is already running"
+  },
+  "找不到视频直刻任务": {
+    "zh": "找不到视频直刻任务",
+    "ja": "動画の直接書き込みタスクが見つかりません",
+    "en": "The direct video burn task was not found"
+  },
+  "正在制作临时光盘镜像": {
+    "zh": "正在制作临时光盘镜像",
+    "ja": "一時ディスクイメージを作成中",
+    "en": "Creating a temporary disc image"
+  },
+  "正在取消，请等待当前操作结束": {
+    "zh": "正在取消，请等待当前操作结束",
+    "ja": "キャンセル中です。現在の処理が終了するまでお待ちください",
+    "en": "Cancelling. Wait for the current operation to finish"
+  },
+  "没有可重试的临时镜像，请重新制作": {
+    "zh": "没有可重试的临时镜像，请重新制作",
+    "ja": "再試行できる一時イメージがありません。もう一度作成してください",
+    "en": "No temporary image is available for retry. Create it again"
+  },
+  "清理临时镜像": {
+    "zh": "清理临时镜像",
+    "ja": "一時イメージを削除中",
+    "en": "Removing the temporary image"
+  },
+  "烧录任务状态不匹配，请检查光盘": {
+    "zh": "烧录任务状态不匹配，请检查光盘",
+    "ja": "書き込みタスクの状態が一致しません。ディスクを確認してください",
+    "en": "The burn task state does not match. Check the disc"
+  },
+  "烧录校验未完成，临时镜像已保留": {
+    "zh": "烧录校验未完成，临时镜像已保留",
+    "ja": "書き込みの検証が完了していません。一時イメージは保持されています",
+    "en": "Burn verification did not finish. The temporary image has been kept"
+  },
+  "烧录状态保存失败：": {
+    "zh": "烧录状态保存失败：",
+    "ja": "書き込み状態を保存できません：",
+    "en": "Could not save burn status: "
+  },
+  "烧录进程仍在运行": {
+    "zh": "烧录进程仍在运行",
+    "ja": "書き込み処理はまだ実行中です",
+    "en": "The burn process is still running"
+  },
+  "视频文件在检查期间发生变化": {
+    "zh": "视频文件在检查期间发生变化",
+    "ja": "確認中に動画ファイルが変更されました",
+    "en": "The video file changed during inspection"
+  },
+  "视频直刻由另一进程保护中，请等待完成": {
+    "zh": "视频直刻由另一进程保护中，请等待完成",
+    "ja": "動画の直接書き込みは別のプロセスで処理中です。完了までお待ちください",
+    "en": "Another process is handling the direct burn. Wait for it to finish"
+  },
+  "视频素材在制作期间发生变化，请重新制作": {
+    "zh": "视频素材在制作期间发生变化，请重新制作",
+    "ja": "作成中に元の動画が変更されました。もう一度作成してください",
+    "en": "The source video changed during authoring. Create it again"
+  },
+  "视频素材已更新，请重新制作": {
+    "zh": "视频素材已更新，请重新制作",
+    "ja": "元の動画が更新されています。もう一度作成してください",
+    "en": "The source video has been updated. Create it again"
+  },
+  "该光盘已烧录完成": {
+    "zh": "该光盘已烧录完成",
+    "ja": "このディスクの書き込みは完了しています",
+    "en": "This disc has already been burned"
+  },
+  "请选择 DVD 或 Blu-ray 空白光盘": {
+    "zh": "请选择 DVD 或 Blu-ray 空白光盘",
+    "ja": "空の DVD または Blu-ray ディスクを選択してください",
+    "en": "Select a blank DVD or Blu-ray disc"
+  },
+  "请选择临时制作文件夹": {
+    "zh": "请选择临时制作文件夹",
+    "ja": "一時作成用のフォルダを選択してください",
+    "en": "Select a temporary authoring folder"
+  },
+  "请选择单个本机视频文件": {
+    "zh": "请选择单个本机视频文件",
+    "ja": "この Mac 上の動画ファイルを 1 つ選択してください",
+    "en": "Select one video file on this Mac"
+  },
+  "重新检查空白光盘": {
+    "zh": "重新检查空白光盘",
+    "ja": "空のディスクを再確認中",
+    "en": "Checking the blank disc again"
+  },
+  "Blu-ray 播放列表无效": {
+    "zh": "Blu-ray 播放列表无效",
+    "ja": "Blu-ray のプレイリストが無効です",
+    "en": "The Blu-ray playlist is invalid"
+  },
+  "Blu-ray 播放列表没有节目": {
+    "zh": "Blu-ray 播放列表没有节目",
+    "ja": "Blu-ray のプレイリストに作品がありません",
+    "en": "The Blu-ray playlist has no titles"
+  },
+  "Blu-ray 播放项目无效": {
+    "zh": "Blu-ray 播放项目无效",
+    "ja": "Blu-ray の再生項目が無効です",
+    "en": "The Blu-ray play item is invalid"
+  },
+  "Blu-ray 管理文件无效": {
+    "zh": "Blu-ray 管理文件无效",
+    "ja": "Blu-ray の管理ファイルが無効です",
+    "en": "The Blu-ray management files are invalid"
+  },
+  "Blu-ray 缺少播放列表": {
+    "zh": "Blu-ray 缺少播放列表",
+    "ja": "Blu-ray のプレイリストがありません",
+    "en": "The Blu-ray playlist is missing"
+  },
+  "Blu-ray 节目目录不完整": {
+    "zh": "Blu-ray 节目目录不完整",
+    "ja": "Blu-ray の作品フォルダが不完全です",
+    "en": "The Blu-ray title directories are incomplete"
+  },
+  "Blu-ray 节目视频缺失或不完整": {
+    "zh": "Blu-ray 节目视频缺失或不完整",
+    "ja": "Blu-ray の作品映像がないか、不完全です",
+    "en": "Blu-ray title video is missing or incomplete"
+  },
+  "DVD-Video 管理文件无效": {
+    "zh": "DVD-Video 管理文件无效",
+    "ja": "DVD-Video の管理ファイルが無効です",
+    "en": "The DVD-Video management file is invalid"
+  },
+  "DVD-Video 缺少节目": {
+    "zh": "DVD-Video 缺少节目",
+    "ja": "DVD-Video に作品がありません",
+    "en": "The DVD-Video has no titles"
+  },
+  "DVD-Video 节目信息无效": {
+    "zh": "DVD-Video 节目信息无效",
+    "ja": "DVD-Video の作品情報が無効です",
+    "en": "The DVD-Video title information is invalid"
+  },
+  "DVD-Video 节目视频缺失或不完整": {
+    "zh": "DVD-Video 节目视频缺失或不完整",
+    "ja": "DVD-Video の作品映像がないか、不完全です",
+    "en": "DVD-Video title video is missing or incomplete"
+  },
+  "光盘不是可读取的 DVD-Video 或 Blu-ray Video": {
+    "zh": "光盘不是可读取的 DVD-Video 或 Blu-ray Video",
+    "ja": "このディスクは読み取り可能な DVD-Video または Blu-ray Video ではありません",
+    "en": "This disc is not a readable DVD-Video or Blu-ray Video"
+  },
+  "光盘尚未挂载，请等待系统读取后刷新": {
+    "zh": "光盘尚未挂载，请等待系统读取后刷新",
+    "ja": "ディスクがまだマウントされていません。システムが読み込んでから更新してください",
+    "en": "The disc is not mounted yet. Wait for the system to read it, then refresh"
+  },
+  "光盘或文件不存在，请刷新后重试": {
+    "zh": "光盘或文件不存在，请刷新后重试",
+    "ja": "ディスクまたはファイルが見つかりません。更新して再試行してください",
+    "en": "The disc or file was not found. Refresh and try again"
+  },
+  "光盘暂时不可播放": {
+    "zh": "光盘暂时不可播放",
+    "ja": "現在このディスクは再生できません",
+    "en": "This disc cannot be played right now"
+  },
+  "光盘目录中有无效文件": {
+    "zh": "光盘目录中有无效文件",
+    "ja": "ディスクのフォルダに無効なファイルがあります",
+    "en": "The disc directory contains an invalid file"
+  },
+  "光盘目录包含冲突的文件名": {
+    "zh": "光盘目录包含冲突的文件名",
+    "ja": "ディスクのフォルダに重複するファイル名があります",
+    "en": "The disc directory contains conflicting filenames"
+  },
+  "光盘目录包含过多项目": {
+    "zh": "光盘目录包含过多项目",
+    "ja": "ディスクのフォルダに項目が多すぎます",
+    "en": "The disc directory contains too many items"
+  },
+  "光盘视频目录无效": {
+    "zh": "光盘视频目录无效",
+    "ja": "ディスクの映像フォルダが無効です",
+    "en": "The disc video directory is invalid"
+  },
+  "光盘设备查询失败: ": {
+    "zh": "光盘设备查询失败: ",
+    "ja": "光学ドライブの照会に失敗しました：",
+    "en": "Optical drive query failed: "
+  },
+  "光盘设备查询失败: {detail}": {
+    "zh": "光盘设备查询失败: {detail}",
+    "ja": "光学ドライブの照会に失敗しました：{detail}",
+    "en": "Optical drive query failed: {detail}"
+  },
+  "光盘设备查询返回了无效数据": {
+    "zh": "光盘设备查询返回了无效数据",
+    "ja": "光学ドライブの照会で無効なデータが返されました",
+    "en": "The optical drive query returned invalid data"
+  },
+  "光驱中没有光盘": {
+    "zh": "光驱中没有光盘",
+    "ja": "光学ドライブにディスクがありません",
+    "en": "There is no disc in the drive"
+  },
+  "光驱已断开，请刷新设备列表": {
+    "zh": "光驱已断开，请刷新设备列表",
+    "ja": "光学ドライブが取り外されました。デバイス一覧を更新してください",
+    "en": "The optical drive was disconnected. Refresh the device list"
+  },
+  "无法读取光盘或文件，请检查读取权限": {
+    "zh": "无法读取光盘或文件，请检查读取权限",
+    "ja": "ディスクまたはファイルを読み取れません。読み取り権限を確認してください",
+    "en": "Cannot read the disc or file. Check read permissions"
+  },
+  "目录不是单一的 DVD-Video 或 Blu-ray Video": {
+    "zh": "目录不是单一的 DVD-Video 或 Blu-ray Video",
+    "ja": "フォルダに単一の DVD-Video または Blu-ray Video がありません",
+    "en": "The folder does not contain a single DVD-Video or Blu-ray Video"
+  },
+  "空白光盘还没有可播放内容": {
+    "zh": "空白光盘还没有可播放内容",
+    "ja": "空のディスクにはまだ再生できる内容がありません",
+    "en": "The blank disc has no playable content yet"
+  },
+  "请选择光盘、ISO 或 VIDEO_TS／BDMV 文件夹": {
+    "zh": "请选择光盘、ISO 或 VIDEO_TS／BDMV 文件夹",
+    "ja": "ディスク、ISO、または VIDEO_TS／BDMV フォルダを選択してください",
+    "en": "Select a disc, ISO, or VIDEO_TS/BDMV folder"
+  },
+  "请选择已插入的可播放光盘": {
+    "zh": "请选择已插入的可播放光盘",
+    "ja": "挿入済みの再生可能なディスクを選択してください",
+    "en": "Select an inserted playable disc"
+  },
+  "读取光盘或文件失败: ": {
+    "zh": "读取光盘或文件失败: ",
+    "ja": "ディスクまたはファイルの読み取りに失敗しました：",
+    "en": "Could not read the disc or file: "
+  },
+  "读取光盘或文件失败: {detail}": {
+    "zh": "读取光盘或文件失败: {detail}",
+    "ja": "ディスクまたはファイルの読み取りに失敗しました：{detail}",
+    "en": "Could not read the disc or file: {detail}"
+  },
+  "player_runtime_missing": {
+    "zh": "缺少内置播放器组件，请重新安装完整安装包",
+    "ja": "内蔵プレーヤーが見つかりません。完全なインストーラーで再インストールしてください",
+    "en": "The built-in player is missing. Reinstall using the complete installer"
+  },
+  "player_runtime_invalid": {
+    "zh": "内置播放器组件无法加载，请重新安装完整安装包",
+    "ja": "内蔵プレーヤーを読み込めません。完全なインストーラーで再インストールしてください",
+    "en": "The built-in player could not be loaded. Reinstall using the complete installer"
+  },
+  "player_open_failed": {
+    "zh": "无法打开播放源，请刷新并重新选择光盘或文件",
+    "ja": "再生元を開けません。更新してディスクまたはファイルを選び直してください",
+    "en": "Could not open the playback source. Refresh and select the disc or file again"
+  },
+  "player_source_invalid": {
+    "zh": "播放源无效，请选择 DVD-Video 或 Blu-ray Video",
+    "ja": "再生元が無効です。DVD-Video または Blu-ray Video を選択してください",
+    "en": "The playback source is invalid. Select a DVD-Video or Blu-ray Video"
+  },
+  "player_disc_unreadable": {
+    "zh": "无法播放光盘内容，请检查光盘、文件和光驱状态",
+    "ja": "ディスクの内容を再生できません。ディスク、ファイル、光学ドライブの状態を確認してください",
+    "en": "Could not play the disc contents. Check the disc, files, and optical drive"
+  },
+  "ready": {
+    "zh": "可以播放",
+    "ja": "再生できます",
+    "en": "Ready to play"
+  },
+  "no_media": {
+    "zh": "光驱中没有光盘",
+    "ja": "光学ドライブにディスクがありません",
+    "en": "There is no disc in the drive"
+  },
+  "blank": {
+    "zh": "空白光盘还没有可播放内容",
+    "ja": "空のディスクにはまだ再生できる内容がありません",
+    "en": "The blank disc has no playable content yet"
+  },
+  "not_mounted": {
+    "zh": "光盘尚未挂载，请等待系统读取后刷新",
+    "ja": "ディスクがまだマウントされていません。システムが読み込んでから更新してください",
+    "en": "The disc is not mounted yet. Wait for the system to read it, then refresh"
+  },
+  "invalid_structure": {
+    "zh": "光盘不是可读取的 DVD-Video 或 Blu-ray Video",
+    "ja": "このディスクは読み取り可能な DVD-Video または Blu-ray Video ではありません",
+    "en": "This disc is not a readable DVD-Video or Blu-ray Video"
+  },
+  "光盘正在写入或校验，请等待完成": {
+    "zh": "光盘正在写入或校验，请等待完成",
+    "ja": "ディスクへの書き込みまたは検証中です。完了までお待ちください",
+    "en": "The disc is being written or verified. Wait for it to finish"
+  },
+  "烧录已完成，请检查临时文件清理状态": {
+    "zh": "烧录已完成，请检查临时文件清理状态",
+    "ja": "書き込みは完了しました。一時ファイルの削除状態を確認してください",
+    "en": "Burning is complete. Check the temporary-file cleanup status"
+  },
+  "光驱托盘操作无效": {
+    "zh": "光驱托盘操作无效",
+    "ja": "トレイの操作が無効です",
+    "en": "Invalid optical-drive tray action"
+  },
+  "无法读取光驱状态": {
+    "zh": "无法读取光驱状态",
+    "ja": "光学ドライブの状態を読み取れません",
+    "en": "Unable to read the optical drive status"
+  },
+  "光驱托盘操作返回了不匹配的设备": {
+    "zh": "光驱托盘操作返回了不匹配的设备",
+    "ja": "トレイ操作の応答が選択したドライブと一致しません",
+    "en": "The tray operation returned a different device"
+  },
+  "烧录后校验选项必须是布尔值": {
+    "zh": "烧录后校验选项必须是布尔值",
+    "ja": "書き込み後の検証はオンかオフを指定してください",
+    "en": "Post-burn verification must be a boolean"
+  },
+  "烧录完成，已跳过校验": {
+    "zh": "烧录完成，已跳过校验",
+    "ja": "書き込み完了・検証なし",
+    "en": "Burned — not verified"
+  },
+  "未收到烧录完成结果，请检查盘片": {
+    "zh": "未收到烧录完成结果，请检查盘片",
+    "ja": "書き込み完了を確認できません。ディスクを確認してください",
+    "en": "Burn completion was not confirmed. Check the disc"
+  },
+  "高效单遍编码（CPU）：{name}": {
+    "zh": "高效单遍编码（CPU）：{name}",
+    "ja": "高効率エンコード（1パス・CPU）：{name}",
+    "en": "Efficient encoding (single pass · CPU): {name}"
+  },
+  "Efficient single-pass mode is available for Blu-ray only": {
+    "zh": "高效单遍模式仅适用于 Blu-ray",
+    "ja": "高効率1パスモードはBlu-ray専用です",
+    "en": "Efficient single-pass mode is available for Blu-ray only"
+  },
+  "无菜单模式只支持一个视频，请改为有菜单或保留一个视频": {
+    "zh": "无菜单模式只支持一个视频，请改为有菜单或保留一个视频",
+    "ja": "メニューなしでは動画を1本にしてください。複数の動画にはメニュー付きを選択してください。",
+    "en": "Menu-free discs require one video. Choose a menu or keep a single video."
+  },
+  "无菜单模式统一播放结束后停止，请修改旧工程的循环设置": {
+    "zh": "无菜单模式统一播放结束后停止，请修改旧工程的循环设置",
+    "ja": "メニューなしでは再生後に停止します。旧プロジェクトの繰り返し設定を変更してください。",
+    "en": "Menu-free discs stop after playback. Update the loop setting in this older project."
+  },
+  "制作期间素材发生变化，请重新添加任务：{path}": {
+    "zh": "制作期间素材发生变化，请重新添加任务：{path}",
+    "ja": "制作中に素材が変更されました。タスクを追加し直してください：{path}",
+    "en": "An input changed during authoring. Add the task again: {path}"
+  },
+  "素材不是普通文件：{path}": {
+    "zh": "素材不是普通文件：{path}",
+    "ja": "素材は通常のファイルではありません：{path}",
+    "en": "Input is not a regular file: {path}"
+  },
+  "ISO 已生成（输出盘不支持安全直接命名，已保存在任务文件夹）": {
+    "zh": "ISO 已生成（输出盘不支持安全直接命名，已保存在任务文件夹）",
+    "ja": "ISO 作成完了（この保存先では安全に直接配置できないため、タスクフォルダに保存しました）",
+    "en": "ISO created (saved in the task folder because this drive cannot safely publish directly)"
+  },
+  "检查 Blu-ray 视频时序与菜单": {
+    "zh": "检查 Blu-ray 视频时序与菜单",
+    "ja": "Blu-ray の映像タイミングとメニューを検査",
+    "en": "Checking Blu-ray video timing and menus"
+  },
+  "Blu-ray AVC 结构检查失败：{stream}（{detail}）": {
+    "zh": "Blu-ray AVC 结构检查失败：{stream}（{detail}）",
+    "ja": "Blu-ray の AVC 構造検査に失敗：{stream}（{detail}）",
+    "en": "Blu-ray AVC structure check failed: {stream} ({detail})"
+  },
+  "Blu-ray 时序检查失败：{stream}（{detail}）": {
+    "zh": "Blu-ray 时序检查失败：{stream}（{detail}）",
+    "ja": "Blu-ray のタイミング検査に失敗：{stream}（{detail}）",
+    "en": "Blu-ray timing check failed: {stream} ({detail})"
+  },
+  "Blu-ray 菜单检查失败：{stream}（{detail}）": {
+    "zh": "Blu-ray 菜单检查失败：{stream}（{detail}）",
+    "ja": "Blu-ray のメニュー検査に失敗：{stream}（{detail}）",
+    "en": "Blu-ray menu check failed: {stream} ({detail})"
+  },
+  "正在识别光盘，请稍候": {
+    "zh": "正在识别光盘，请稍候",
+    "ja": "ディスクを認識しています。しばらくお待ちください",
+    "en": "Recognizing the disc. Please wait."
+  },
+  "无法确认光盘状态，请重新检测": {
+    "zh": "无法确认光盘状态，请重新检测",
+    "ja": "ディスクの状態を確認できません。再検出してください",
+    "en": "The disc state could not be confirmed. Refresh the drive."
+  },
+  "公开版不包含私有菜单模板。请新建通用菜单或使用自己的背景图片。": {
+    "zh": "公开版不包含私有菜单模板。请新建通用菜单或使用自己的背景图片。",
+    "ja": "公開版には非公開のメニューテンプレートは含まれていません。汎用メニューを新規作成するか、ご自身の背景画像を使用してください。",
+    "en": "The public edition does not include private menu templates. Create a general menu or use your own background image."
+  },
+  "公开版只支持自动或自定义菜单布局。请新建通用菜单。": {
+    "zh": "公开版只支持自动或自定义菜单布局。请新建通用菜单。",
+    "ja": "公開版は自動配置とカスタム配置に対応しています。汎用メニューを新規作成してください。",
+    "en": "The public edition supports automatic and custom menu layouts. Create a new general menu."
+  }
+}

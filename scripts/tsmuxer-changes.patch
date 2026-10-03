@@ -1,0 +1,971 @@
+diff --git a/libmediation/fs/osdep/file_unix.cpp b/libmediation/fs/osdep/file_unix.cpp
+index 5e2cc3c..4bc12a5 100644
+--- a/libmediation/fs/osdep/file_unix.cpp
++++ b/libmediation/fs/osdep/file_unix.cpp
+@@ -89,29 +89,45 @@ bool File::open(const char* fName, unsigned int oflag, unsigned int systemDepend
+ 
+ bool File::close()
+ {
+-    if (::close(to_fd(m_impl)) == 0)
+-    {
+-        m_impl = from_fd(-1);
++    if (!isOpen())
+         return true;
+-    }
+-
+-    return false;
++    const int fd = to_fd(m_impl);
++    // Do not retry close: after an error the descriptor may already be released.
++    m_impl = from_fd(-1);
++    return ::close(fd) == 0;
+ }
+ 
+ int File::read(void* buffer, uint32_t count) const
+ {
+     if (!isOpen())
+         return -1;
+-    m_pos += count;
+-    return ::read(to_fd(m_impl), buffer, count);
++    ssize_t result;
++    do { result = ::read(to_fd(m_impl), buffer, count); } while (result < 0 && errno == EINTR);
++    if (result > 0)
++        m_pos += result;
++    return static_cast<int>(result);
+ }
+ 
+ int File::write(const void* buffer, uint32_t count)
+ {
+     if (!isOpen())
+         return -1;
+-    m_pos += count;
+-    return ::write(to_fd(m_impl), buffer, count);
++    uint32_t written = 0;
++    while (written < count)
++    {
++        const ssize_t result = ::write(to_fd(m_impl), static_cast<const uint8_t*>(buffer) + written, count - written);
++        if (result < 0 && errno == EINTR)
++            continue;
++        if (result <= 0)
++        {
++            if (result == 0)
++                errno = EIO;
++            return -1;
++        }
++        written += static_cast<uint32_t>(result);
++        m_pos += result;
++    }
++    return static_cast<int>(written);
+ }
+ 
+ bool File::isOpen() const { return to_fd(m_impl) != -1; }
+@@ -149,12 +165,21 @@ int64_t File::seek(const int64_t offset, const SeekMethod whence) const
+         sWhence = SEEK_END;
+         break;
+     }
+-    m_pos = offset;
+-    return lseek(to_fd(m_impl), offset, sWhence);
++    off_t result;
++    do { result = lseek(to_fd(m_impl), offset, sWhence); } while (result < 0 && errno == EINTR);
++    if (result >= 0)
++        m_pos = result;
++    return result;
+ }
+ 
+ bool File::truncate(const uint64_t newFileSize) const { return ftruncate(to_fd(m_impl), newFileSize) == 0; }
+ 
+-void File::sync() { ::sync(); }
++void File::sync()
++{
++    int result;
++    do { result = ::fsync(to_fd(m_impl)); } while (result < 0 && errno == EINTR);
++    if (result < 0)
++        throw std::runtime_error("File sync failed: " + m_name + ": " + strerror(errno));
++}
+ 
+-#endif
+\ No newline at end of file
++#endif
+diff --git a/tsMuxer/blurayHelper.cpp b/tsMuxer/blurayHelper.cpp
+index 0105942..09dfcb5 100644
+--- a/tsMuxer/blurayHelper.cpp
++++ b/tsMuxer/blurayHelper.cpp
+@@ -3,6 +3,7 @@
+ #include <fs/directory.h>
+ #include <fs/systemlog.h>
+ #include <array>
++#include <memory>
+ 
+ #include "iso_writer.h"
+ #include "muxerManager.h"
+@@ -266,15 +267,16 @@ bool writeBdMovieObjectData(const MuxerManager& muxer, AbstractOutputStream* fil
+ 
+ BlurayHelper::BlurayHelper() : m_dt(), m_isoWriter(nullptr) {}
+ 
+-BlurayHelper::~BlurayHelper() { close(); }
++BlurayHelper::~BlurayHelper() { delete m_isoWriter; }
+ 
+ void BlurayHelper::close()
+ {
+     if (m_isoWriter)
+     {
+         LTRACE(LT_INFO, 2, "Finalize ISO disk");
+-        delete m_isoWriter;
++        std::unique_ptr<IsoWriter> writer(m_isoWriter);
+         m_isoWriter = nullptr;
++        writer->close();
+     }
+ }
+ 
+diff --git a/tsMuxer/bufferedFileWriter.cpp b/tsMuxer/bufferedFileWriter.cpp
+index ae8dee8..a919b56 100644
+--- a/tsMuxer/bufferedFileWriter.cpp
++++ b/tsMuxer/bufferedFileWriter.cpp
+@@ -2,17 +2,19 @@
+ #include "bufferedFileWriter.h"
+ 
+ #include <fs/systemlog.h>
++#include <memory>
+ 
+ void WriterData::execute() const
+ {
++    std::unique_ptr<uint8_t[]> buffer(m_buffer);
+     switch (m_command)
+     {
+     case Commands::wdWrite:
+         if (m_mainFile)
+         {
+-            m_mainFile->write(m_buffer, m_bufferLen);
++            if (m_mainFile->write(m_buffer, m_bufferLen) != m_bufferLen)
++                throw std::runtime_error("Output write failed");
+         }
+-        delete[] m_buffer;
+         break;
+     default:
+         break;
+@@ -22,7 +24,6 @@ void WriterData::execute() const
+ BufferedFileWriter::BufferedFileWriter() : m_terminated(false), m_writeQueue(WRITE_QUEUE_MAX_SIZE)
+ {
+     m_lastErrorCode = 0;
+-    m_nothingToExecute = true;
+     run(this);
+ }
+ 
+@@ -32,7 +33,8 @@ BufferedFileWriter::~BufferedFileWriter()
+     while (!m_writeQueue.empty())
+     {
+         WriterData writerData = m_writeQueue.pop();
+-        writerData.execute();
++        // Never perform more writes from a destructor after a failed job.
++        delete[] writerData.m_buffer;
+     }
+ }
+ 
+@@ -43,27 +45,37 @@ void BufferedFileWriter::thread_main()
+         WriterData writerData = m_writeQueue.pop();
+         try
+         {
++            if (m_lastErrorCode != 0) {
++                delete[] writerData.m_buffer;
++                if (writerData.m_command != WriterData::Commands::wdNone)
++                    --m_pending;
++                continue;
++            }
+             writerData.execute();
+         }
+         catch (std::runtime_error& e)
+         {
++            std::lock_guard<std::mutex> lock(m_errorMutex);
+             m_lastErrorStr = e.what();
+             m_lastErrorCode = -1;
+             LTRACE(LT_ERROR, 0, "BufferedFileWriter::thread_main() throws runtime_error: " << e.what());
+         }
+         catch (std::exception& e)
+         {
++            std::lock_guard<std::mutex> lock(m_errorMutex);
+             m_lastErrorStr = e.what();
+             m_lastErrorCode = -1;
+             LTRACE(LT_ERROR, 0, "BufferedFileWriter::thread_main() throws exception: " << e.what());
+         }
+         catch (...)
+         {
+-            m_lastErrorStr = "Unknown expcetion";
++            std::lock_guard<std::mutex> lock(m_errorMutex);
++            m_lastErrorStr = "Unknown output write exception";
+             m_lastErrorCode = -1;
+             LTRACE(LT_ERROR, 0, "BufferedFileWriter::thread_main() throws unknown exception");
+         }
+-        m_nothingToExecute = m_writeQueue.empty();
++        if (writerData.m_command != WriterData::Commands::wdNone)
++            --m_pending;
+     }
+ }
+ 
+diff --git a/tsMuxer/bufferedFileWriter.h b/tsMuxer/bufferedFileWriter.h
+index 7d6993e..e243407 100644
+--- a/tsMuxer/bufferedFileWriter.h
++++ b/tsMuxer/bufferedFileWriter.h
+@@ -5,6 +5,8 @@
+ #include <fs/file.h>
+ #include <system/terminatablethread.h>
+ #include <types/types.h>
++#include <atomic>
++#include <mutex>
+ 
+ #include "vod_common.h"
+ 
+@@ -36,27 +38,48 @@ class BufferedFileWriter final : public TerminatableThread
+     BufferedFileWriter();
+     ~BufferedFileWriter() override;
+     void terminate();
+-    int getQueueSize() const { return static_cast<int>(m_writeQueue.size()); }
++    int getQueueSize() const { checkError(); return static_cast<int>(m_writeQueue.size()); }
+ 
+     bool addWriterData(const WriterData& data)
+     {
+-        if (m_lastErrorCode == 0)
++        try
+         {
+-            m_nothingToExecute = false;
+-            return m_writeQueue.push(data);
++            checkError();
++            ++m_pending;
++            if (m_writeQueue.push(data))
++                return true;
++            --m_pending;
++            throw std::runtime_error("Output write queue is full");
+         }
+-        throw std::runtime_error(m_lastErrorStr);
++        catch (...) { delete[] data.m_buffer; throw; }
++    }
++    bool isQueueEmpty() const
++    {
++        checkError();
++        if (m_pending != 0)
++            return false;
++        // The last pending write can fail between the first check and this load.
++        checkError();
++        return true;
+     }
+-    bool isQueueEmpty() const { return m_nothingToExecute; }
+ 
+    protected:
+     void thread_main() override;
+ 
+    private:
+-    bool m_nothingToExecute;
+-    int m_lastErrorCode;
++    void checkError() const
++    {
++        if (m_lastErrorCode != 0)
++        {
++            std::lock_guard<std::mutex> lock(m_errorMutex);
++            throw std::runtime_error(m_lastErrorStr);
++        }
++    }
++    std::atomic<unsigned> m_pending{0};
++    std::atomic<int> m_lastErrorCode{0};
++    mutable std::mutex m_errorMutex;
+     std::string m_lastErrorStr;
+-    bool m_terminated;
++    std::atomic<bool> m_terminated;
+ 
+     WaitableSafeQueue<WriterData> m_writeQueue;
+ };
+diff --git a/tsMuxer/iso_writer.cpp b/tsMuxer/iso_writer.cpp
+index e92d031..65c94d3 100644
+--- a/tsMuxer/iso_writer.cpp
++++ b/tsMuxer/iso_writer.cpp
+@@ -5,6 +5,8 @@
+ #include <algorithm>
+ #include <cassert>
+ #include <climits>
++#include <cerrno>
++#include <memory>
+ #include <cstring>
+ #include <ctime>
+ 
+@@ -546,13 +548,28 @@ bool ISOFile::open(const char *name, unsigned int oflag, unsigned int systemDepe
+     return true;
+ }
+ 
+-void ISOFile::sync() { m_owner->m_file.sync(); }
++void ISOFile::sync()
++{
++    try { m_owner->m_file.sync(); }
++    catch (...) { m_owner->m_failed = true; throw; }
++}
++
++ISOFile::~ISOFile()
++{
++    // Explicit close reports errors; destruction must never throw while unwinding.
++    try { close(); }
++    catch (...) { m_owner->m_failed = true; }
++}
+ 
+ bool ISOFile::close()
+ {
+-    if (m_entry)
+-        m_entry->close();
++    FileEntryInfo *entry = m_entry;
+     m_entry = nullptr;
++    if (!entry)
++        return true;
++    if (m_owner->m_failed)
++        return false;
++    entry->close();
+     return true;
+ }
+ 
+@@ -592,13 +609,14 @@ IsoWriter::IsoWriter(const IsoHeaderData &hdrData)
+     m_tagLocationBaseAddr = 0;
+     m_lastWritedObjectID = -1;
+     m_opened = false;
++    m_failed = false;
+     m_volumeLabel = " ";
+     m_layerBreakPoint = 0;
+ }
+ 
+ IsoWriter::~IsoWriter()
+ {
+-    close();
++    // Finalization is explicit, so errors reach main instead of a noexcept destructor.
+     delete m_rootDirInfo;
+     delete m_systemStreamDir;
+ }
+@@ -627,7 +645,7 @@ bool IsoWriter::open(const std::string &fileName, const int64_t diskSize, const
+ 
+     // 1. write 32K empty space
+     memset(m_buffer, 0, sizeof(m_buffer));
+-    for (int i = 0; i < 32768 / SECTOR_SIZE; ++i) m_file.write(m_buffer, SECTOR_SIZE);
++    for (int i = 0; i < 32768 / SECTOR_SIZE; ++i) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // 2. write Beginning Extended Area Descriptor
+     m_buffer[0] = 0;  // Structure Type
+@@ -637,7 +655,7 @@ bool IsoWriter::open(const std::string &fileName, const int64_t diskSize, const
+     m_buffer[4] = '0';
+     m_buffer[5] = '1';
+     m_buffer[6] = 1;  // Structure Version
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // 3. Volume recognition structures. NSR Descriptor
+     m_buffer[0] = 0;  // Structure Type
+@@ -647,7 +665,7 @@ bool IsoWriter::open(const std::string &fileName, const int64_t diskSize, const
+     m_buffer[4] = '0';
+     m_buffer[5] = '3';
+     m_buffer[6] = 1;  // Structure Version
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // 4. Terminating Extended Area Descriptor
+     m_buffer[0] = 0;  // Structure Type
+@@ -657,23 +675,23 @@ bool IsoWriter::open(const std::string &fileName, const int64_t diskSize, const
+     m_buffer[4] = '0';
+     m_buffer[5] = '1';
+     m_buffer[6] = 1;  // Structure Version
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // 576K align
+ 
+     memset(m_buffer, 0, SECTOR_SIZE);
+-    while (m_file.size() < 1024LL * 576) m_file.write(m_buffer, SECTOR_SIZE);
++    while (fileSize() < 1024LL * 576) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+-    m_partitionStartAddress = static_cast<int>(m_file.size() / SECTOR_SIZE);
++    m_partitionStartAddress = static_cast<int>(fileSize() / SECTOR_SIZE);
+     m_tagLocationBaseAddr = m_partitionStartAddress;
+     m_partitionEndAddress = 0;
+ 
+     // Align to 64K (640K total)
+     memset(m_buffer, 0, sizeof(m_buffer));
+-    for (int i = 0; i < 64 / 2; ++i) m_file.write(m_buffer, SECTOR_SIZE);
++    for (int i = 0; i < 64 / 2; ++i) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // -------------- start main volume --------------------------
+-    m_metadataLBN = static_cast<int>(m_file.size() / SECTOR_SIZE);
++    m_metadataLBN = static_cast<int>(fileSize() / SECTOR_SIZE);
+ 
+     // create root
+     m_rootDirInfo = new FileEntryInfo(this, nullptr, 0, FileTypes::Directory);
+@@ -688,12 +706,12 @@ bool IsoWriter::open(const std::string &fileName, const int64_t diskSize, const
+ 
+     memset(m_buffer, 0, sizeof(m_buffer));
+     const int64_t requiredFileSizeLBN = METADATA_START_ADDR + m_metadataFileLen / SECTOR_SIZE;
+-    const int64_t currentFileSizeLBN = m_file.size() / SECTOR_SIZE;
+-    for (int64_t i = currentFileSizeLBN; i < requiredFileSizeLBN; ++i) m_file.write(m_buffer, SECTOR_SIZE);
++    const int64_t currentFileSizeLBN = fileSize() / SECTOR_SIZE;
++    for (int64_t i = currentFileSizeLBN; i < requiredFileSizeLBN; ++i) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // reserve space for metadata mapping file
+ 
+-    for (int i = 0; i < ALLOC_BLOCK_SIZE / SECTOR_SIZE; ++i) m_file.write(m_buffer, SECTOR_SIZE);
++    for (int i = 0; i < ALLOC_BLOCK_SIZE / SECTOR_SIZE; ++i) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     m_opened = true;
+     return true;
+@@ -801,7 +819,7 @@ FileEntryInfo *IsoWriter::getEntryByName(const std::string &name, const FileType
+ 
+ void IsoWriter::writeMetadata(const int lbn)
+ {
+-    m_file.seek(static_cast<int64_t>(lbn) * SECTOR_SIZE);
++    seekTo(static_cast<int64_t>(lbn) * SECTOR_SIZE);
+     m_curMetadataPos = lbn;
+     writeFileSetDescriptor();
+     writeTerminationDescriptor();
+@@ -824,12 +842,12 @@ void IsoWriter::allocateMetadata()
+             "parameter in split mode: 4");
+ 
+     // write udf unique id mapping file
+-    m_file.seek(static_cast<int64_t>(METADATA_START_ADDR) * SECTOR_SIZE + m_metadataFileLen);
++    seekTo(static_cast<int64_t>(METADATA_START_ADDR) * SECTOR_SIZE + m_metadataFileLen);
+ 
+-    const auto buffer = new uint8_t[ALLOC_BLOCK_SIZE];
+-    memset(buffer, 0, ALLOC_BLOCK_SIZE);
++    const auto buffer = std::make_unique<uint8_t[]>(ALLOC_BLOCK_SIZE);
++    memset(buffer.get(), 0, ALLOC_BLOCK_SIZE);
+     ByteFileWriter writer;
+-    writer.setBuffer(buffer, ALLOC_BLOCK_SIZE);
++    writer.setBuffer(buffer.get(), ALLOC_BLOCK_SIZE);
+ 
+     writer.writeCharSpecString(m_impId.c_str(), 32);
+     writer.writeLE32(0);  // flags
+@@ -846,41 +864,44 @@ void IsoWriter::allocateMetadata()
+         writer.writeLE16(1);  // object partition
+     }
+ 
+-    m_metadataMappingFile->write(buffer, static_cast<int32_t>(writer.size()));
++    m_metadataMappingFile->write(buffer.get(), static_cast<int32_t>(writer.size()));
+     m_metadataMappingFile->close();
+-    delete[] buffer;
+ }
+ 
+ void IsoWriter::close()
+ {
++    if (m_failed)
++        throw std::runtime_error("ISO finalization refused after an I/O failure");
+     if (!m_opened)
+         return;
++    // Never repeat a partially failed finalization, including during unwinding.
++    m_opened = false;
+ 
+     memset(m_buffer, 0, sizeof(m_buffer));
+-    while (m_file.size() % ALLOC_BLOCK_SIZE != 1024LL * 62) m_file.write(m_buffer, SECTOR_SIZE);
++    while (fileSize() % ALLOC_BLOCK_SIZE != 1024LL * 62) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     // mirror metadata file location and length
+-    m_metadataMirrorLBN = static_cast<int>(m_file.size() / SECTOR_SIZE + 1);
++    m_metadataMirrorLBN = static_cast<int>(fileSize() / SECTOR_SIZE + 1);
+     m_tagLocationBaseAddr = m_partitionStartAddress;
+     writeExtendedFileEntryDescriptor(false, 0, FileTypes::MetadataMirror, m_metadataFileLen,
+                                      m_metadataMirrorLBN - m_partitionStartAddress, 0);
+ 
+     // allocate space for metadata mirror file
+     memset(m_buffer, 0, sizeof(m_buffer));
+-    for (int i = 0; i < m_metadataFileLen / SECTOR_SIZE; ++i) m_file.write(m_buffer, SECTOR_SIZE);
++    for (int i = 0; i < m_metadataFileLen / SECTOR_SIZE; ++i) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+-    m_partitionEndAddress = static_cast<int>(m_file.size() / SECTOR_SIZE);
++    m_partitionEndAddress = static_cast<int>(fileSize() / SECTOR_SIZE);
+ 
+     // reserve 64K for EOF anchor volume
+     memset(m_buffer, 0, sizeof(m_buffer));
+-    for (int i = 0; i < 32; ++i) m_file.write(m_buffer, SECTOR_SIZE);
++    for (int i = 0; i < 32; ++i) writeRawData(m_buffer, SECTOR_SIZE);
+ 
+     allocateMetadata();
+ 
+     m_tagLocationBaseAddr = m_metadataMirrorLBN;
+     writeMetadata(m_metadataMirrorLBN);  // write metadata mirror file
+ 
+-    m_file.seek(1024LL * 576);
++    seekTo(1024LL * 576);
+     // metadata file location and length (located at 576K, point to 640K address)
+     m_tagLocationBaseAddr = m_partitionStartAddress;
+     writeExtendedFileEntryDescriptor(false, 0, FileTypes::Metadata, m_metadataFileLen,
+@@ -889,14 +910,17 @@ void IsoWriter::close()
+     writeMetadata(m_metadataLBN);
+ 
+     writeDescriptors();
+-    m_opened = false;
++    try { m_file.sync(); }
++    catch (...) { m_failed = true; throw; }
++    if (!m_file.close())
++        ioError("close");
+ }
+ 
+ void IsoWriter::writeDescriptors()
+ {
+     m_tagLocationBaseAddr = 0;
+     // descriptors in a beginning of a file
+-    m_file.seek(1024LL * 64);
++    seekTo(1024LL * 64);
+ 
+     writePrimaryVolumeDescriptor();
+     writeImpUseDescriptor();
+@@ -905,12 +929,12 @@ void IsoWriter::writeDescriptors()
+     writeUnallocatedSpaceDescriptor();
+     writeTerminationDescriptor();
+ 
+-    m_file.seek(1024LL * 128);
++    seekTo(1024LL * 128);
+ 
+     writeLogicalVolumeIntegrityDescriptor();
+     writeTerminationDescriptor();
+ 
+-    m_file.seek(1024LL * 512);
++    seekTo(1024LL * 512);
+ 
+     writeAnchorVolumeDescriptor(m_partitionEndAddress +
+                                 ALLOC_BLOCK_SIZE / SECTOR_SIZE);  // add space for last 64K anchor volume
+@@ -918,7 +942,7 @@ void IsoWriter::writeDescriptors()
+     // descriptors in a end of a file
+ 
+     const int64_t eofPos = m_partitionEndAddress * static_cast<int64_t>(SECTOR_SIZE);
+-    m_file.seek(eofPos + ALLOC_BLOCK_SIZE - SECTOR_SIZE);
++    seekTo(eofPos + ALLOC_BLOCK_SIZE - SECTOR_SIZE);
+     // TODO: It may be preferable not to include the AVDP at (N - 256) for Rewritable media (ditto DVDFab and ImgBurn)
+     writeAnchorVolumeDescriptor(m_partitionEndAddress + ALLOC_BLOCK_SIZE / SECTOR_SIZE);
+ 
+@@ -931,7 +955,7 @@ void IsoWriter::writeDescriptors()
+ 
+     memset(m_buffer, 0, sizeof(m_buffer));
+     const int64_t fullFileSize = eofPos + static_cast<int64_t>(1024 * 512) + ALLOC_BLOCK_SIZE;
+-    while (m_file.size() < fullFileSize - SECTOR_SIZE) m_file.write(m_buffer, SECTOR_SIZE);
++    while (fileSize() < fullFileSize - SECTOR_SIZE) writeRawData(m_buffer, SECTOR_SIZE);
+     writeAnchorVolumeDescriptor(m_partitionEndAddress + ALLOC_BLOCK_SIZE / SECTOR_SIZE);
+ }
+ 
+@@ -943,7 +967,7 @@ int32_t IsoWriter::absoluteSectorNum() const
+ void IsoWriter::sectorSeek(const Partition partition, const int pos) const
+ {
+     const int64_t offset = (partition == Partition::MetadataPartition) ? m_curMetadataPos : m_partitionStartAddress;
+-    m_file.seek((offset + pos) * SECTOR_SIZE, File::SeekMethod::smBegin);
++    seekTo((offset + pos) * SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeEntity(const FileEntryInfo *dir)
+@@ -989,7 +1013,7 @@ void IsoWriter::writeAllocationExtentDescriptor(const ExtentList *extents, const
+     }
+     buff32[5] = static_cast<uint32_t>(curPos - m_buffer - 24);  // length
+     calcDescriptorCRC(m_buffer, static_cast<uint16_t>(curPos - m_buffer));
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ int IsoWriter::writeExtendedFileEntryDescriptor(const bool namedStream, const uint8_t objectId,
+@@ -1058,7 +1082,7 @@ int IsoWriter::writeExtendedFileEntryDescriptor(const bool namedStream, const ui
+         buff32[216 / 4] = static_cast<uint32_t>(len);  // Allocation descriptors, data len in bytes
+         buff32[220 / 4] = pos;  // Allocation descriptors, start logical block number inside volume
+         calcDescriptorCRC(m_buffer, 224);
+-        m_file.write(m_buffer, SECTOR_SIZE);
++        writeRawData(m_buffer, SECTOR_SIZE);
+         sectorsWrited++;
+     }
+     else if (extents == nullptr)
+@@ -1067,7 +1091,7 @@ int IsoWriter::writeExtendedFileEntryDescriptor(const bool namedStream, const ui
+         buff32[212 / 4] = 0x10;  // long AD size
+         writeLongAD(m_buffer + 216, static_cast<uint32_t>(len), pos, 0, 0);
+         calcDescriptorCRC(m_buffer, 232);
+-        m_file.write(m_buffer, SECTOR_SIZE);
++        writeRawData(m_buffer, SECTOR_SIZE);
+         sectorsWrited++;
+     }
+     else
+@@ -1089,7 +1113,7 @@ int IsoWriter::writeExtendedFileEntryDescriptor(const bool namedStream, const ui
+             curPos += 16;
+         }
+         calcDescriptorCRC(m_buffer, static_cast<uint16_t>(curPos - m_buffer));
+-        m_file.write(m_buffer, SECTOR_SIZE);
++        writeRawData(m_buffer, SECTOR_SIZE);
+         sectorsWrited++;
+ 
+         size_t indexStart = indexEnd;
+@@ -1156,7 +1180,7 @@ void IsoWriter::writeFileSetDescriptor()
+     writer.writeLongAD(0x0800, m_systemStreamLBN, 1, 0);
+ 
+     calcDescriptorCRC(m_buffer, 512);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writePrimaryVolumeDescriptor()
+@@ -1212,7 +1236,7 @@ void IsoWriter::writePrimaryVolumeDescriptor()
+     // 490..511 Reserved
+ 
+     calcDescriptorCRC(m_buffer, 512);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeImpUseDescriptor()
+@@ -1238,7 +1262,7 @@ void IsoWriter::writeImpUseDescriptor()
+     strcpy(reinterpret_cast<char *>(m_buffer) + 0x180, m_appId.c_str());  // ImplementationUse
+ 
+     calcDescriptorCRC(m_buffer, 512);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writePartitionDescriptor()
+@@ -1261,7 +1285,7 @@ void IsoWriter::writePartitionDescriptor()
+     strcpy(reinterpret_cast<char *>(m_buffer) + 0xe4, m_appId.c_str());  // ImplementationUse
+ 
+     calcDescriptorCRC(m_buffer, 512);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeLogicalVolumeDescriptor()
+@@ -1325,7 +1349,7 @@ void IsoWriter::writeLogicalVolumeDescriptor()
+     m_buffer[504] = 0x01;    // Flags
+ 
+     calcDescriptorCRC(m_buffer, 510);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeUnallocatedSpaceDescriptor()
+@@ -1338,7 +1362,7 @@ void IsoWriter::writeUnallocatedSpaceDescriptor()
+     buff32[4] = 0x04;  // sequence number
+ 
+     calcDescriptorCRC(m_buffer, 24);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeTerminationDescriptor()
+@@ -1347,7 +1371,7 @@ void IsoWriter::writeTerminationDescriptor()
+     writeDescriptorTag(m_buffer, DescriptorTag::Terminating, absoluteSectorNum());
+ 
+     calcDescriptorCRC(m_buffer, 512);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeLogicalVolumeIntegrityDescriptor()
+@@ -1382,7 +1406,7 @@ void IsoWriter::writeLogicalVolumeIntegrityDescriptor()
+     strcpy(reinterpret_cast<char *>(m_buffer) + 142, m_appId.c_str());
+ 
+     calcDescriptorCRC(m_buffer, static_cast<uint16_t>(142 + m_appId.size()));
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+ void IsoWriter::writeAnchorVolumeDescriptor(const uint32_t endPartitionAddr)
+@@ -1397,12 +1421,41 @@ void IsoWriter::writeAnchorVolumeDescriptor(const uint32_t endPartitionAddr)
+     buff32[7] = endPartitionAddr;  // set size to allocated sectors amount
+ 
+     calcDescriptorCRC(m_buffer, 512);
+-    m_file.write(m_buffer, SECTOR_SIZE);
++    writeRawData(m_buffer, SECTOR_SIZE);
+ }
+ 
+-void IsoWriter::writeSector(const uint8_t *sectorData) { m_file.write(sectorData, SECTOR_SIZE); }
++void IsoWriter::writeSector(const uint8_t *sectorData) { writeRawData(sectorData, SECTOR_SIZE); }
+ 
+-int IsoWriter::writeRawData(const uint8_t *data, const int size) { return m_file.write(data, size); }
++[[noreturn]] void IsoWriter::ioError(const char *operation) const
++{
++    const int error = errno;
++    m_failed = true;
++    throw std::runtime_error(std::string("ISO ") + operation + " failed: " + strerror(error));
++}
++
++int IsoWriter::writeRawData(const uint8_t *data, const int size)
++{
++    if (m_failed)
++        throw std::runtime_error("ISO write refused after an I/O failure");
++    const int written = m_file.write(data, size);
++    if (written != size)
++        ioError("write");
++    return written;
++}
++
++void IsoWriter::seekTo(const int64_t offset) const
++{
++    if (m_file.seek(offset) != offset)
++        ioError("seek");
++}
++
++int64_t IsoWriter::fileSize() const
++{
++    int64_t size = 0;
++    if (!m_file.size(&size) || size < 0)
++        ioError("size");
++    return size;
++}
+ 
+ void IsoWriter::checkLayerBreakPoint(const int maxExtentSize)
+ {
+@@ -1411,10 +1464,9 @@ void IsoWriter::checkLayerBreakPoint(const int maxExtentSize)
+     {
+         const int rest = m_layerBreakPoint - lbn;
+         const int size = rest * SECTOR_SIZE;
+-        const auto tmpBuffer = new uint8_t[size];
+-        memset(tmpBuffer, 0, size);
+-        m_file.write(tmpBuffer, size);
+-        delete[] tmpBuffer;
++        const auto tmpBuffer = std::make_unique<uint8_t[]>(size);
++        memset(tmpBuffer.get(), 0, size);
++        writeRawData(tmpBuffer.get(), size);
+         m_lastWritedObjectID = -1;
+     }
+ }
+diff --git a/tsMuxer/iso_writer.h b/tsMuxer/iso_writer.h
+index e0e1d05..da7ff82 100644
+--- a/tsMuxer/iso_writer.h
++++ b/tsMuxer/iso_writer.h
+@@ -203,6 +203,9 @@ class IsoWriter
+ 
+     void setMetaPartitionSize(int size);
+     int writeRawData(const uint8_t* data, int size);
++    void seekTo(int64_t offset) const;
++    int64_t fileSize() const;
++    [[noreturn]] void ioError(const char* operation) const;
+     void checkLayerBreakPoint(int maxExtentSize);
+     void writePrimaryVolumeDescriptor();
+     void writeAnchorVolumeDescriptor(uint32_t endPartitionAddr);
+@@ -268,6 +271,7 @@ class IsoWriter
+ 
+     std::map<int, MappingEntry> m_mappingEntries;
+     bool m_opened;
++    mutable bool m_failed;
+     int m_layerBreakPoint;  // in sectors
+ };
+ 
+@@ -275,7 +279,7 @@ class ISOFile final : public AbstractOutputStream
+ {
+    public:
+     ISOFile(IsoWriter* owner) : AbstractOutputStream(), m_owner(owner), m_entry(nullptr) {}
+-    ~ISOFile() override { close(); }
++    ~ISOFile() override;
+ 
+     int write(const void* data, uint32_t len) override;
+     bool open(const char* name, unsigned int oflag, unsigned int systemDependentFlags = 0) override;
+diff --git a/tsMuxer/main.cpp b/tsMuxer/main.cpp
+index 945534f..8c84a25 100644
+--- a/tsMuxer/main.cpp
++++ b/tsMuxer/main.cpp
+@@ -1,3 +1,8 @@
++#include <filesystem>
++#include <fstream>
++#include <memory>
++#include <chrono>
++#include <iomanip>
+ #include <fs/directory.h>
+ #include <fs/systemlog.h>
+ #include <fs/textfile.h>
+@@ -551,6 +556,70 @@ All parameters in this group start with two dashes:
+ 
+ int main(int argc, char** argv)
+ {
++    // DiscAuthor: package an authored BDMV tree without remuxing its menus.
++    if (argc == 5 && std::string(argv[1]) == "--pack-iso") {
++        try {
++            namespace fs = std::filesystem;
++            fs::path root(argv[2]);
++            uint64_t total = 0;
++            for (auto& e : fs::recursive_directory_iterator(root))
++                if(e.is_regular_file() && e.path().filename().string().rfind("._",0)!=0) total += e.file_size();
++            uint64_t completed = 0, lastReported = 0;
++            auto lastReportTime = std::chrono::steady_clock::now();
++            // Report copied payload, not elapsed time or a preallocated ISO size.
++            // Keep completion pending until the metadata and fsync also succeed.
++            const auto reportProgress = [&]() {
++                const double percent = total ? 100.0 * completed / total : 0.0;
++                std::cout << std::fixed << std::setprecision(3)
++                          << std::min(99.9, percent) << "% complete" << std::endl;
++                lastReported = completed;
++                lastReportTime = std::chrono::steady_clock::now();
++            };
++            reportProgress();
++            IsoWriter iso(IsoHeaderData::reproducible());
++            iso.setVolumeLabel(argv[4]);
++            if (!iso.open(argv[3], total + 64*1024*1024, 256)) return 2;
++            std::vector<fs::path> paths;
++            for (auto& e : fs::recursive_directory_iterator(root))
++                if(e.path().filename().string().rfind("._",0)!=0) paths.push_back(e.path());
++            std::sort(paths.begin(), paths.end());
++            // Keep HDD reads and writes in bounded batches. Small alternating
++            // reads/writes compete badly with other readers of the same drive.
++            std::vector<char> inputBuffer(4 * 1024 * 1024);
++            std::vector<char> copyBuffer(4 * 1024 * 1024);
++            for (auto& path : paths) {
++                std::string rel = fs::relative(path,root).generic_string();
++                if (fs::is_directory(path)) { iso.createDir(rel); continue; }
++                std::unique_ptr<ISOFile> out(iso.createFile());
++                if(!out->open(rel.c_str(), 0)) throw std::runtime_error("ISO file open failed");
++                const uint64_t expected = fs::file_size(path);
++                std::ifstream in;
++                // libc++ requires the file buffer to be configured before open.
++                in.rdbuf()->pubsetbuf(inputBuffer.data(), inputBuffer.size());
++                in.open(path, std::ios::binary);
++                if (!in.is_open()) throw std::runtime_error("ISO input open failed: " + path.string());
++                uint64_t copied = 0;
++                while (in) {
++                    in.read(copyBuffer.data(), copyBuffer.size());
++                    const auto n = in.gcount();
++                    if (n && out->write(copyBuffer.data(), n) != n) throw std::runtime_error("ISO write failed");
++                    copied += n;
++                    completed += n;
++                    const auto elapsed = std::chrono::steady_clock::now() - lastReportTime;
++                    if (completed - lastReported >= 8 * 1024 * 1024 || elapsed >= std::chrono::milliseconds(500))
++                        reportProgress();
++                }
++                if (in.bad() || !in.eof() || copied != expected || fs::file_size(path) != expected)
++                    throw std::runtime_error("ISO input read failed or changed: " + path.string());
++                if (!out->close()) throw std::runtime_error("ISO input close failed: " + path.string());
++            }
++            reportProgress();
++            iso.close();
++            std::cout << "100.000% complete" << std::endl;
++            return 0;
++        } catch(const std::exception& e) { std::cerr << e.what() << std::endl; return 2; }
++    }
++
+ #ifdef _WIN32
+     auto argvWide = CommandLineToArgvW(GetCommandLineW(), &argc);
+     std::vector<std::string> argv_utf8;
+@@ -789,6 +858,8 @@ int main(int argc, char** argv)
+                 }
+             }
+ 
++            // Finalize before success is reported, never from a destructor.
++            blurayHelper.close();
+             LTRACE(LT_INFO, 2, "Mux successful complete");
+         }
+         else
+diff --git a/tsMuxer/muxerManager.cpp b/tsMuxer/muxerManager.cpp
+index 89b7854..7ce9133 100644
+--- a/tsMuxer/muxerManager.cpp
++++ b/tsMuxer/muxerManager.cpp
+@@ -60,6 +60,8 @@ MuxerManager::MuxerManager(const BufferedReaderManager& readManager, AbstractMux
+ 
+ MuxerManager::~MuxerManager()
+ {
++    // Join/discard pending output before destroying the streams it refers to.
++    delete m_fileWriter;
+     delete m_mainMuxer;
+     delete m_subMuxer;
+ }
+diff --git a/tsMuxer/pgsStreamReader.cpp b/tsMuxer/pgsStreamReader.cpp
+index 636f4c7..70640d9 100644
+--- a/tsMuxer/pgsStreamReader.cpp
++++ b/tsMuxer/pgsStreamReader.cpp
+@@ -787,7 +787,7 @@ void PGSStreamReader::intDecodeStream(uint8_t* buffer, const size_t len)
+             return;
+ 
+         curPos += 3;
+-        if (segment_type == 0x16)
++        if (segment_type == 0x16 || segment_type == 0x18)
+         {
+             BitStreamReader bitReader{};
+             bitReader.setBuffer(curPos, bufEnd);
+diff --git a/tsMuxer/tsMuxer.cpp b/tsMuxer/tsMuxer.cpp
+index bb29b01..1874f17 100644
+--- a/tsMuxer/tsMuxer.cpp
++++ b/tsMuxer/tsMuxer.cpp
+@@ -208,7 +208,7 @@ void TSMuxer::intAddStream(const std::string& streamName, const std::string& cod
+     }
+     else if (codecName == "S_HDMV/PGS" || codecName == "S_TEXT/UTF8")
+     {
+-        tsStreamIndex = (V3_flags & 0x1e ? 0x12A0 : 0x1200) + m_pgsTrackCnt;
++        tsStreamIndex = (params.count("ig") ? 0x1400 : (V3_flags & 0x1e ? 0x12A0 : 0x1200)) + m_pgsTrackCnt;
+         m_pgsTrackCnt++;
+     }
+     m_extIndexToTSIndex[streamIndex] = tsStreamIndex;
+@@ -310,7 +310,7 @@ void TSMuxer::intAddStream(const std::string& streamName, const std::string& cod
+         m_pmt.pidList[tsStreamIndex] = PMTStreamInfo(StreamType::AUDIO_AAC, tsStreamIndex, descrBuffer, descriptorLen,
+                                                      codecReader, lang, isSecondary);
+     else if (codecName == "S_SUP" || codecName == "S_HDMV/PGS" || codecName == "S_TEXT/UTF8")
+-        m_pmt.pidList[tsStreamIndex] = PMTStreamInfo(StreamType::SUB_PGS, tsStreamIndex, descrBuffer, descriptorLen,
++        m_pmt.pidList[tsStreamIndex] = PMTStreamInfo(params.count("ig") ? StreamType::SUB_IGS : StreamType::SUB_PGS, tsStreamIndex, descrBuffer, descriptorLen,
+                                                      codecReader, lang, isSecondary);
+     else if (codecName == "A_AC3")
+     {
+@@ -561,7 +561,9 @@ void TSMuxer::writeEmptyPacketWithPCRTest(const int64_t pcrVal)
+     tsPacket->setPID(m_pmt.pcr_pid);
+     tsPacket->afExists = 1;
+     tsPacket->adaptiveField.setPCR33(pcrVal);
+-    tsPacket->counter = m_streamInfo[m_pmt.pcr_pid].m_tsCnt;  // do not increment counter because data_exists == 0
++    // m_tsCnt is the next payload counter. Adaptation-only packets repeat the
++    // preceding counter, including 15 before the first payload packet's 0.
++    tsPacket->counter = (m_streamInfo[m_pmt.pcr_pid].m_tsCnt - 1) & 0x0f;
+ 
+     memset(curBuf + tsPacket->getHeaderSize(), 0xff, TS_FRAME_SIZE - tsPacket->getHeaderSize());
+     tsPacket->adaptiveField.length += TS_FRAME_SIZE - tsPacket->getHeaderSize();
+@@ -587,7 +589,8 @@ void TSMuxer::writeEmptyPacketWithPCR(const int64_t pcrVal)
+     tsPacket->setPID(m_pmt.pcr_pid);
+     tsPacket->afExists = 1;
+     tsPacket->adaptiveField.setPCR33(pcrVal);
+-    tsPacket->counter = m_streamInfo[m_pmt.pcr_pid].m_tsCnt;  // do not increment counter becouse data_exists == 0
++    // m_tsCnt is the next payload counter. PCR-only packets must not advance it.
++    tsPacket->counter = (m_streamInfo[m_pmt.pcr_pid].m_tsCnt - 1) & 0x0f;
+ 
+     memset(curBuf + tsPacket->getHeaderSize(), 0xff, TS_FRAME_SIZE - tsPacket->getHeaderSize());
+     tsPacket->adaptiveField.length += TS_FRAME_SIZE - tsPacket->getHeaderSize();
+diff --git a/tsMuxer/tsPacket.cpp b/tsMuxer/tsPacket.cpp
+index 4d6192a..f274cea 100644
+--- a/tsMuxer/tsPacket.cpp
++++ b/tsMuxer/tsPacket.cpp
+@@ -1253,6 +1253,7 @@ MPLSParser::MPLSParser()
+     number_of_primary_audio_stream_entries = 0;
+     number_of_PG_textST_stream_entries = 0;
+     number_of_IG_stream_entries = 0;
++    number_of_IG_stream_entries = 0;
+     number_of_secondary_audio_stream_entries = 0;
+     number_of_secondary_video_stream_entries = 0;
+     number_of_PiP_PG_textST_stream_entries_plus = 0;
+@@ -2187,6 +2188,7 @@ void MPLSParser::composeSTN_table(BitStreamWriter& writer, const size_t PlayItem
+     number_of_primary_audio_stream_entries = 0;
+     number_of_secondary_audio_stream_entries = 0;
+     number_of_PG_textST_stream_entries = 0;
++    number_of_IG_stream_entries = 0;
+     number_of_DolbyVision_video_stream_entries = 0;
+ 
+     std::vector<MPLSStreamInfo>& streamInfo = isSSEx ? m_streamInfoMVC : m_streamInfo;
+@@ -2212,6 +2214,8 @@ void MPLSParser::composeSTN_table(BitStreamWriter& writer, const size_t PlayItem
+         }
+         else if (stream_coding_type == StreamType::SUB_PGS)
+             number_of_PG_textST_stream_entries++;
++        else if (stream_coding_type == StreamType::SUB_IGS)
++            number_of_IG_stream_entries++;
+         else
+         {
+             LTRACE(LT_ERROR, 2,
+@@ -2225,7 +2229,7 @@ void MPLSParser::composeSTN_table(BitStreamWriter& writer, const size_t PlayItem
+         writer.putBits(8, number_of_primary_video_stream_entries);  // test subpath
+         writer.putBits(8, number_of_primary_audio_stream_entries);
+         writer.putBits(8, number_of_PG_textST_stream_entries);
+-        writer.putBits(8, 0);  // int number_of_IG_stream_entries = reader.getBits(8);
++        writer.putBits(8, number_of_IG_stream_entries);
+         writer.putBits(8, number_of_secondary_audio_stream_entries);
+         writer.putBits(8,
+                        number_of_secondary_video_stream_entries);  // int number_of_secondary_video_stream_entries.
+@@ -2280,6 +2284,13 @@ void MPLSParser::composeSTN_table(BitStreamWriter& writer, const size_t PlayItem
+         }
+     }
+ 
++    // Interactive graphics entries follow presentation graphics.
++    for (auto& i : streamInfo) {
++        if (i.stream_coding_type == StreamType::SUB_IGS) {
++            i.composeStreamEntry(writer, PlayItem_id);
++            i.composeStreamAttributes(writer);
++        }
++    }
+     // secondary audio
+     for (auto& i : streamInfo)
+     {
+@@ -2780,9 +2791,9 @@ void MPLSStreamInfo::composeStreamAttributes(BitStreamWriter& writer)
+         writer.putBits(4, sampling_frequency_index);
+         CLPIStreamInfo::writeString(language_code, writer, 3);
+     }
+-    else if (stream_coding_type == StreamType::SUB_PGS)
++    else if (stream_coding_type == StreamType::SUB_PGS || stream_coding_type == StreamType::SUB_IGS)
+     {
+-        // Presentation Graphics stream
++        // Presentation / Interactive Graphics stream
+         CLPIStreamInfo::writeString(language_code, writer, 3);
+         writer.putBits(8, 0);  // reserved_for_future_use
+     }

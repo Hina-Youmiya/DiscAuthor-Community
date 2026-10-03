@@ -1,0 +1,48 @@
+{
+  "title": "メインメニュー",
+  "export_mode": "project_name",
+  "export_format_suffix": true,
+  "format": "dvd",
+  "capacity": "dvd5",
+  "standard": "ntsc",
+  "bd_mode": "auto",
+  "per_page": 4,
+  "layout": "auto",
+  "background": "",
+  "font": {
+    "path": "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc",
+    "index": 0
+  },
+  "font_size": 42,
+  "videos": [],
+  "menu_enabled": true,
+  "no_menu_end_action": "stop",
+  "navigation": {},
+  "menu_language": "ja",
+  "first_button": 1,
+  "after_play": "menu",
+  "remember_selection": true,
+  "button_feedback": {
+    "style": "fill",
+    "selected_color": "#ffff00",
+    "activated_color": "#ff0000",
+    "opacity": 0.5,
+    "region_enabled": true,
+    "text_enabled": false,
+    "selected_text_color": "#ffff00",
+    "activated_text_color": "#ff0000"
+  },
+  "text_style": {
+    "color": "#ffffff",
+    "outline_enabled": false,
+    "outline_color": "#ffffff",
+    "outline_width": 4
+  },
+  "encoding": {
+    "quality": "high",
+    "denoise": "off",
+    "anti_flicker": "off",
+    "source_scan": "auto"
+  },
+  "menu_template": null
+}
