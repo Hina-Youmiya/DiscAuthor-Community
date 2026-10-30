@@ -52,13 +52,64 @@ def _pes_payloads(data, pid):
         yield packet[body:]
 
 
-def inspect_multiplexed_igs(data, pid=0x1400):
+def _inspect_pages(raw, offset, count):
+    """Decode the no-effect pages emitted by our main-menu/popup authors."""
+    def take(size):
+        nonlocal offset
+        end = offset + size
+        if end > len(raw):
+            raise ValueError('IG page or button data is truncated')
+        value = raw[offset:end]
+        offset = end
+        return value
+
+    def number(size):
+        return int.from_bytes(take(size), 'big')
+
+    pages = []
+    for _ in range(count):
+        page = {'id': number(1), 'version': number(1), 'uo_mask': take(8).hex()}
+        # Each empty effect sequence has window_count=0 and effect_count=0.
+        if take(4) != bytes(4):
+            raise ValueError('IG validation does not support page transition effects')
+        page.update(animation_frame_rate_code=number(1),
+                    default_selected_button_id_ref=number(2),
+                    default_activated_button_id_ref=number(2), palette_id_ref=number(1))
+        bogs = []
+        for _ in range(number(1)):
+            bog = {'default_valid_button_id_ref': number(2), 'buttons': []}
+            for _ in range(number(1)):
+                button = take(35)
+                if button[4] & 0x7f:
+                    raise ValueError('IG auto-action button has nonzero reserved bits')
+                nav_count = int.from_bytes(button[33:35], 'big')
+                bog['buttons'].append({
+                    'id': int.from_bytes(button[:2], 'big'),
+                    'auto_action': bool(button[4] & 0x80),
+                    'normal_object_id': int.from_bytes(button[17:19], 'big'),
+                    'selected_object_id': int.from_bytes(button[23:25], 'big'),
+                    'activated_object_id': int.from_bytes(button[29:31], 'big'),
+                    'commands': [take(12).hex() for _ in range(nav_count)],
+                })
+            bogs.append(bog)
+        page['bogs'] = bogs
+        pages.append(page)
+    if offset != len(raw):
+        raise ValueError('IG page length does not match its composition')
+    return pages
+
+
+def inspect_multiplexed_igs(data, pid=0x1400, *, expected_ui_model=0):
     """Return complete ICS header dictionaries; reject mismatched stream models.
 
     An empty list means no complete interactive composition was found in the
     prefix. Callers requiring a menu must reject that result. This parser is
     deliberately limited to unfragmented ICSs, as emitted by DiscAuthor.
+    expected_ui_model=0 requires an always-on main menu, 1 requires a title
+    popup, and None reports either. Stream model must always match main M2TS.
     """
+    if expected_ui_model not in (None, 0, 1):
+        raise ValueError('Invalid expected IG user-interface model')
     elementary = b''.join(_pes_payloads(data, pid))
     results = []
     offset = 0
@@ -79,8 +130,11 @@ def inspect_multiplexed_igs(data, pid=0x1400):
         declared = int.from_bytes(raw[9:12], 'big')
         if declared != len(raw) - 12:
             raise ValueError('IG interactive composition length does not match its segment')
-        if raw[12] != 0:
-            raise ValueError('Primary-stream IG must declare multiplexed always-on mode')
+        if raw[12] & 0xbf:
+            raise ValueError('Primary-stream IG must declare multiplexed mode without reserved bits')
+        ui_model = raw[12] >> 6
+        if expected_ui_model is not None and ui_model != expected_ui_model:
+            raise ValueError('Primary-stream IG has an unexpected user-interface model')
         if len(raw) < 27:
             raise ValueError('Multiplexed IG is missing its timeout or page fields')
         if raw[13] & 0xfe or raw[18] & 0xfe:
@@ -91,7 +145,7 @@ def inspect_multiplexed_igs(data, pid=0x1400):
             'frame_rate_code': raw[4] >> 4,
             'composition_number': int.from_bytes(raw[5:7], 'big'),
             'stream_model': 0,
-            'ui_model': 0,
+            'ui_model': ui_model,
             'composition_timeout_pts': int.from_bytes(raw[13:18], 'big'),
             'selection_timeout_pts': int.from_bytes(raw[18:23], 'big'),
             'user_timeout_duration': int.from_bytes(raw[23:26], 'big'),
@@ -101,5 +155,6 @@ def inspect_multiplexed_igs(data, pid=0x1400):
         }
         if not result['page_count']:
             raise ValueError('IG interactive composition has no pages')
+        result['pages'] = _inspect_pages(raw, 27, result['page_count'])
         results.append(result)
     return results

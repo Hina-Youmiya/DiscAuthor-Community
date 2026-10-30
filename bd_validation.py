@@ -17,6 +17,25 @@ from bd_avc import check_avc_access_units
 SAMPLE_BYTES = 8 * 1024 * 1024
 
 
+def check_popup_return(composition):
+    """Require the actual default auto-action that makes POPUP return work."""
+    pages=composition.get('pages',[])
+    if composition.get('ui_model')!=1 or len(pages)!=1:
+        raise ValueError('Movie return entry must be a single popup page')
+    page=pages[0]
+    bogs=page.get('bogs',[])
+    if (page.get('id')!=0 or page.get('default_selected_button_id_ref')!=1
+            or page.get('default_activated_button_id_ref')!=0xffff or page.get('uo_mask')!='0000000000000000'
+            or len(bogs)!=1 or bogs[0].get('default_valid_button_id_ref')!=1
+            or len(bogs[0].get('buttons',[]))!=1):
+        raise ValueError('Movie return popup has no reachable default button')
+    button=bogs[0]['buttons'][0]
+    if (button.get('id')!=1 or not button.get('auto_action')
+            or button.get('commands')!=['218100000000000000000000']):
+        raise ValueError('Movie popup must automatically call the indexed Top Menu')
+    return {'automatic':True,'target':'Top Menu'}
+
+
 def run_probe(args, checkpoint, timeout=45):
     """Drain diagnostic output while honoring cancellation; always reap child."""
     with subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True) as process:
@@ -67,12 +86,15 @@ def check_hrd_trace(trace):
             'maximum_initial_delay': 90000 * size // rate, 'initial_delays': delays}
 
 
-def validate_iso(iso, ffmpeg, work, checkpoint=lambda: None, *, menu_pages=None):
+def validate_iso(iso, ffmpeg, work, checkpoint=lambda: None, *, menu_pages=None, require_popup_return=False):
     """Read every authored stream's prefix, without mounting or writing the ISO."""
+    if require_popup_return and (type(menu_pages) is not int or menu_pages<=0):
+        raise ValueError('Popup return validation requires a nonempty menu')
     iso = Path(iso)
     before = fingerprint(iso)
     report = {'passed': False, 'scope': 'First 8 MiB / first 5 AVC frames of each stream; known-defect checks only',
-              'physical_player_tested': False, 'expected_menu_pages': menu_pages, 'streams': []}
+              'physical_player_tested': False, 'expected_menu_pages': menu_pages,
+              'popup_return_required': bool(require_popup_return), 'streams': []}
     reader = UDFBluray(iso)
     try:
         names = sorted(name for name in reader.names('BDMV/STREAM') if re.fullmatch(r'\d{5}\.m2ts', name))
@@ -97,9 +119,17 @@ def validate_iso(iso, ffmpeg, work, checkpoint=lambda: None, *, menu_pages=None)
                 except ValueError as exc:
                     raise ValueError(f'Blu-ray AVC 结构检查失败：{name}（{exc}）') from exc
                 try:
-                    compositions=inspect_multiplexed_igs(data)
-                    if menu_pages is not None and bool(compositions)!=(index < menu_pages):
-                        raise ValueError('Interactive menu stream does not match the project')
+                    expected_model=None if menu_pages is None else (0 if index<menu_pages else 1)
+                    compositions=inspect_multiplexed_igs(data,expected_ui_model=expected_model)
+                    if menu_pages is not None:
+                        if index<menu_pages and not compositions:
+                            raise ValueError('Interactive menu stream does not match the project')
+                        if index>=menu_pages and menu_pages==0 and compositions:
+                            raise ValueError('A no-menu title must not have a popup return menu')
+                        if index>=menu_pages and menu_pages>0 and require_popup_return and not compositions:
+                            raise ValueError('Movie is missing its Popup Menu return entry')
+                        if index>=menu_pages and menu_pages>0 and require_popup_return:
+                            for composition in compositions:check_popup_return(composition)
                     for ic in compositions:
                         if any(ic[key] for key in ('composition_timeout_pts','selection_timeout_pts','user_timeout_duration')):
                             raise ValueError('Authored still-menu timeout must be disabled')

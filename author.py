@@ -420,6 +420,13 @@ def dvd(j,pages,bitrate):
     project=ET.Element('dvdauthor',{'dest':str(disc)})
     vmg=ET.SubElement(project,'vmgm');ET.SubElement(vmg,'fpc').text=('g0=0; g1=0; jump titleset 1 menu;' if menu_enabled else 'jump title 1;')
     menus=ET.SubElement(vmg,'menus');ET.SubElement(menus,'video',{'format':'pal' if pal else 'ntsc'})
+    if menu_enabled:
+        # DVD TOP MENU calls the VMGM Title entry, whereas MENU calls the VTSM
+        # Root entry. Both must exist even though the visible pages live in
+        # the titleset. Keep g0/g1 so either call restores the programme's page
+        # and selection; resetting them here would send every call to page 1.
+        top=ET.SubElement(menus,'pgc',{'entry':'title'})
+        ET.SubElement(top,'pre').text='jump titleset 1 menu entry root;'
     ts=ET.SubElement(project,'titleset')
     if menu_enabled:
         ms=ET.SubElement(ts,'menus')
@@ -490,7 +497,17 @@ def bd(j,pages,bitrate):
     for i,v in enumerate(j.config['videos']):
         progress_range=programme_range(j.config['videos'],i,end=82)
         j.stage(f'编码节目 {i+1}/{len(j.config["videos"])}：{v["title"]}',progress_range[0])
-        dest=work/f'title{i}.mkv';encode(j,v['path'],dest,v['info'],bitrate=bitrate,progress_range=progress_range);streams.append((dest,None))
+        dest=work/f'title{i}.mkv';encode(j,v['path'],dest,v['info'],bitrate=bitrate,progress_range=progress_range)
+        popup=None
+        if pages:
+            # Top Menu and Popup Menu are different remote commands. A hidden
+            # popup composition in each movie gives POPUP a real HDMV return
+            # path without drawing over the programme or re-encoding it.
+            popup=work/f'title{i}-return.sup'
+            mode=encoding.plan(j.config,v['info'])['mode']
+            rate={'1080p24':1,'1080p24_exact':2,'1080i50':3,'1080i60':4}[mode]
+            bluray.write_return_igs(popup,i//j.config.get('per_page',4),frame_rate_code=rate)
+        streams.append((dest,popup))
     # Single-title STOP route tested on DMP-BDT180, not a blanket Panasonic
     # compatibility claim. Keep tsMuxer's original index/MovieObject and ISO
     # layout; the common output guard below also checks the actual AVC bytes.
@@ -528,7 +545,7 @@ def bd(j,pages,bitrate):
                     if p.name.startswith('._'):continue
                     shutil.copy2(p,disc/'BDMV'/sub/p.name)
                     if sub!='STREAM':shutil.copy2(p,disc/'BDMV/BACKUP'/sub/p.name)
-        if ig:
+        if i<len(pages):
             pl=disc/f'BDMV/PLAYLIST/{i:05d}.mpls';bluray.set_still(pl);shutil.copy2(pl,disc/'BDMV/BACKUP/PLAYLIST'/pl.name)
     first_play_plan=encoding.plan(j.config,{} if pages else j.config['videos'][0]['info'],menu=bool(pages))
     bluray.navigation(disc,len(pages),len(j.config['videos']),j.config.get('per_page',4),j.config,
@@ -670,7 +687,8 @@ def build(j):
                 normalization=repair_iso(iso,checkpoint=j._wait_to_run,generated_image=True)
                 result['avc_normalization']=normalization
                 (j.out/'bd-avc-normalization.json').write_text(json.dumps(normalization,ensure_ascii=False,indent=2))
-                checks=validate_iso(iso,FFMPEG,j.out/'work',j._wait_to_run,menu_pages=len(pages_for(c)))
+                checks=validate_iso(iso,FFMPEG,j.out/'work',j._wait_to_run,menu_pages=len(pages_for(c)),
+                                    require_popup_return=c.get('menu_enabled',True) and not c.get('reexport_bd_iso'))
                 result['bd_validation']=checks
             except Exception as exc:
                 checks={'passed':False,'physical_player_tested':False,'error':str(exc)}

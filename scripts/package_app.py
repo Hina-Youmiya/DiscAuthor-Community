@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse,hashlib,json,plistlib,shutil,subprocess,sys,tempfile,os
 
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='0.4.16'
+VERSION='0.4.17'
 # Bundled disc-authoring binaries require macOS 15, even if SwiftUI supports older systems.
 MINIMUM_MACOS='15.0'
 APP_NAME='DiscAuthor Community'

@@ -42,7 +42,7 @@ def translate_lines(message,language):
 def error(e):return jsonify(error=translate_lines(str(e),request.headers.get('X-DiscAuthor-Language','ja'))),getattr(e,'code',400)
 @app.get('/')
 def index():
-    return jsonify(application='DiscAuthor Community',interface='native',version='0.4.16')
+    return jsonify(application='DiscAuthor Community',interface='native',version='0.4.17')
 @app.get('/api/fonts')
 def font_list():
     from fonts import installed,bundled
@@ -70,7 +70,7 @@ def localized_snapshot(job):
         if snapshot.get(key):snapshot[key]=translate(snapshot[key],language)
     return snapshot
 @app.get('/health')
-def health():return jsonify(application='DiscAuthor Community',version='0.4.16')
+def health():return jsonify(application='DiscAuthor Community',version='0.4.17')
 @app.get('/api/status')
 def status():
     with lock: snapshots={k:localized_snapshot(v) for k,v in jobs.items()}

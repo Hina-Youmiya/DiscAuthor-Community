@@ -1,14 +1,16 @@
-# DiscAuthor Community 0.4.16
+# DiscAuthor Community 0.4.17
 
 Native SwiftUI DVD-Video / Blu-ray authoring for Apple Silicon Macs, with a Python authoring engine. The interface defaults to Japanese and also supports Chinese and English.
 
 **Status: GPL source preview.** Original application code is licensed under **GNU GPL version 3 (GPL-3.0-only)**; see [LICENSE](LICENSE). Third-party components keep their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-The complete Community application bundle has been built on the preparation Mac. Its packaged backend passed four synthetic ISO export cases: DVD with a menu, DVD with one video and no menu, Blu-ray with a menu, and Blu-ray with one video and no menu. Two actual native GUI startup and shutdown regression runs passed, with no backend left running after exit. A limited native UI/playback smoke test also passed: the default Japanese interface worked, DVD and BD menu ISOs displayed their menus, and direction/confirm actions started moving test footage. The BD menu's white text changed to yellow for focus and followed Down navigation. Installation and operation on a clean second Mac have not been verified.
+The 0.4.16 Community application bundle was built and tested on the preparation Mac. Its packaged backend passed four synthetic ISO export cases: DVD with a menu, DVD with one video and no menu, Blu-ray with a menu, and Blu-ray with one video and no menu. Two actual native GUI startup and shutdown regression runs passed, with no backend left running after exit. A limited native UI/playback smoke test also passed: the default Japanese interface worked, DVD and BD menu ISOs displayed their menus, and direction/confirm actions started moving test footage. The BD menu's white text changed to yellow for focus and followed Down navigation. Installation and operation on a clean second Mac have not been verified.
+
+Version 0.4.17 adds the missing DVD Title/Top Menu entry and a Blu-ray Popup Menu return path during movie playback. The return route preserves the originating menu page and programme selection. See [menu-return changes and validation](docs/MENU_RETURN.md) for the distinct remote commands, test procedure and limits. Previously exported ISOs and burned discs are not changed by an application update.
 
 ## Source release
 
-Download the [0.4.16 source preview](https://github.com/Hina-Youmiya/DiscAuthor-Community/releases/tag/v0.4.16-source-preview) for the application source, retained third-party source materials and checksums. The repository includes build recipes; see [BUILD.md](docs/BUILD.md). No ready-made installer is attached to this release because the native dependency source/license inventory still has documented gaps. The local installer does not require a paid Apple certificate.
+Download the [0.4.17 source preview](https://github.com/Hina-Youmiya/DiscAuthor-Community/releases/tag/v0.4.17-source-preview) for the application source and checksums. Retained third-party source materials remain available in the [0.4.16 release](https://github.com/Hina-Youmiya/DiscAuthor-Community/releases/tag/v0.4.16-source-preview). The repository includes build recipes; see [BUILD.md](docs/BUILD.md). No ready-made installer is attached to this release because the native dependency source/license inventory still has documented gaps. The local installer does not require a paid Apple certificate.
 
 ## Features retained
 
